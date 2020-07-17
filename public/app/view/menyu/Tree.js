@@ -2,7 +2,7 @@ Ext.define('MyApp.view.menyu.Tree', {
     extend: 'Ext.tree.Panel',
 
     xtype: 'maintree',
-    
+    useArrows:true,
 
    
    

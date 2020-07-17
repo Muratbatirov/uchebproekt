@@ -18,6 +18,7 @@ controllers: [
  
  'Menu'
 ],
+defaultToken : 'home',
     onAppUpdate: function () {
         Ext.Msg.confirm('Application Update', 'This application has an update, reload?',
             function (choice) {

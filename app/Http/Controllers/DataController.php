@@ -5,26 +5,27 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Response;
 
 use Illuminate\Http\Request;
-use App\Menulist;
+use App\DoxCategor;
+use App\RasCategor;
 class DataController extends Controller
 {
-    public function menulist(){
+    public function menudoxod(){
     	
-        $data = Menulist::select('text','id')->with(array('children'=>function($query){
-    $query->select('id','text','menulist_id');
-}))->get()->toArray();
+        $doxod = DoxCategor::select('name','id')->where('user_id', 14)->get();
          
         
          
        
-      	for ($x = 0; $x <= count($data); $x++) {
+      
 
-    unset($data[$x]['id']);
- }
+        // $root['success']=true;
+   //  $root['children'] = $data; 
 
-         $root['success']=true;
-     $root['children'] = $data; 
-
-            return $data;
+            return json_encode($doxod, JSON_UNESCAPED_UNICODE);
+    }
+    public function menurasxod(){
+    	
+        $rasxod = RasCategor::select('name','id')->where('user_id', 14)->get();
+        return json_encode($rasxod, JSON_UNESCAPED_UNICODE);
     }
 }

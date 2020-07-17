@@ -14,4 +14,8 @@
 Route::get('/', function () {
     return view('welcome');
 });
-Route::any('/menulist', 'DataController@menulist');
+Route::any('/menudoxod', 'DataController@menudoxod');
+Route::any('/menurasxod', 'DataController@menurasxod');
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');

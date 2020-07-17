@@ -1,18 +1,18 @@
-Ext.define('MyApp.store.Menyu', {
+Ext.define('MyApp.store.menu.Rasxodstore', {
     extend: 'Ext.data.Store',
-    storeId:'menyu',
     
-   
+    
+    model: 'MyApp.model.menu.Treerasxod',
     
     
      proxy: {
     type: 'ajax',
    
-    url: 'menulist',
+    url: 'menurasxod',
    reader: {
            
             type: 'json',
-            rootProperity:'children'
+           
             
         }
 },

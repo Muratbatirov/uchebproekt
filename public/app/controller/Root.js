@@ -3,34 +3,34 @@
  */
 Ext.define('MyApp.controller.Root', {
     extend: 'Ext.app.Controller',
+     
 
+     init: function() {
+        this.addRef([{
+            ref: 'main',
+            selector: '[xtype=mainmenu]'
+        },{
+            ref: 'mainPanel',
+            selector: 'mainpanel'
+        },{
+            ref: 'filmsGrid',
+            selector: '[xtype=films-grid]'
+        }]);
+        this.callParent();
+    },
     
 
    
 
-    // routes : {
-    //     'home' : 'onHome',
-
-    //     'user|actorsgrid|categoriesgrid|languagesgrid|citiesgrid|countriesgrid|films|salesfilmcategory': {
-    //         before: 'onBeforeRoute',
-    //         action: 'onRoute'
-    //     },
-        
-    //     'films/:id' : {
-    //         action: 'onFilmSelect',
-    //         before: 'onBeforeFilmSelect',
-    //         conditions : {
-    //             ':id' : '([0-9]+)'
-    //         }
-    //     }
-    // },
-
-    // onHome : function() {
-    //     var mainPanel = this.getMainPanel();
-    //     if (mainPanel){
-    //         mainPanel.setActiveTab(0);
-    //     }
-    // },
+     routes : {
+        'home' : 'onHome'
+    },
+    onHome : function() {
+        var mainPanel = this.getMainPanel();
+        if (mainPanel){
+            mainPanel.setActiveTab(0);
+        }
+    },
 
     
 });
