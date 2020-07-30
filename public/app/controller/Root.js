@@ -27,9 +27,14 @@ Ext.define('MyApp.controller.Root', {
     },
     onHome : function() {
         var mainPanel = this.getMainPanel();
-        if (mainPanel){
-            mainPanel.setActiveTab(0);
-        }
+        console.log('panel');
+       var  newTab = mainPanel.add({
+                xtype: 'otchetgrid',
+               
+                title: 'title',
+                closable: true
+            });
+       mainPanel.setActiveTab(newTab);
     },
 
     

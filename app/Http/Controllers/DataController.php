@@ -11,21 +11,31 @@ class DataController extends Controller
 {
     public function menudoxod(){
     	
-        $doxod = DoxCategor::select('name','id')->where('user_id', 14)->get();
+        $doxod = DoxCategor::select('id','name')->where('user_id', 14)->get();
          
         
          
        
       
 
-        // $root['success']=true;
-   //  $root['children'] = $data; 
-
-            return json_encode($doxod, JSON_UNESCAPED_UNICODE);
+        
+     $root['children'] = $doxod; 
+   
+           return json_encode($root, JSON_UNESCAPED_UNICODE);
     }
     public function menurasxod(){
     	
-        $rasxod = RasCategor::select('name','id')->where('user_id', 14)->get();
-        return json_encode($rasxod, JSON_UNESCAPED_UNICODE);
+        $rasxod = RasCategor::select('id','name')->where('user_id', 14)->get();
+          $root['children'] = $rasxod; 
+        return json_encode($root, JSON_UNESCAPED_UNICODE);
     }
+    public function list(){
+        
+        $doxod = DoxCategor::select('id','name')->where('user_id', 14)->get();
+ 
+      
+   
+           return json_encode($doxod, JSON_UNESCAPED_UNICODE);
+    }
+
 }

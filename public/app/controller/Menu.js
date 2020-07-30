@@ -4,40 +4,46 @@ stores: [
         'menu.Doxodstore',
         'menu.Rasxodstore'
     ],
+    refs: [
+        {
+            ref: 'mainPanel',
+            selector: 'mainpanel'
+        }
+    ],
    renderDynamicMenu: function(view, options) {
 
-    console.log(this.stores);
-
+  
         view.body.mask('Loading Menus... Please wait...');
         var menu = Ext.create('MyApp.view.menyu.Tree',{
                     title: 'titll',
                    
                  });
-        var nodes = {{text:'doxod',children:[]},{text:'rasxod',children:[]}};
+        var nod = [{text:'doxod'},{text:'rasxod'}];
+        menu.getRootNode().appendChild(nod);
+        console.log(nod);
         this.getStore('menu.Doxodstore').load(function(records, op, success){
              
             
-              
+   
 
-                 
-
-                 
-                   
-                var treeNodeStore = records;
-                 
+                 for (var i=0; i<records.length; i++){
                      
-
-                 for (var i=0; i<treeNodeStore.length; i++){
-                     item = treeNodeStore[i].data;
-
-                   nodes[0]['children'].push({
-                         text: item['name'],
+ 
+                   menu.getRootNode().getChildAt(0).appendChild({
+                         leaf: true,
+                         text: records[i].data['name'],
                          
                          iconCls:'fa fa-shopping-cart fa-lg'
                         
                      });
+   
                  }
+                  
+                
+                 
+                 console.log(menu.getRootNode().getChildAt(0));
                  });
+
         this.getStore('menu.Rasxodstore').load(function(records, op, success){
              
             
@@ -47,38 +53,58 @@ stores: [
 
                  
                    
-                var treeNodeStore = records;
+                
                  
                      
 
-                 for (var i=0; i<treeNodeStore.length; i++){
-                     item = treeNodeStore[i].data;
+                 for (var i=0; i<records.length; i++){
+                    
 
-                   nodes[1]['children'].push({
-                         text: item['name'],
+                    menu.getRootNode().getChildAt(1).appendChild({
+                         leaf: true,
+                         text: records[i].data['name'],
                          
                          iconCls:'fa fa-shopping-cart fa-lg'
                         
                      });
                  }
-                 });
-        console.log(nodes);
-             menu.getRootNode().appendChild(nodes);
-          
+                  console.log(menu.getRootNode());
+                  
+                
+            
              view.add(menu);
              view.body.unmask();
+                 });
+         
+          console.log(nod);
             
         
     },
 
-   
+   onTreePanelItemClick: function(view, record, item, index, event, options){
+      var mainPanel = this.getMainPanel();
+        console.log('panel');
+       var  newTab = mainPanel.add({
+                xtype: 'otchetgrid',
+               
+                title: 'title',
+                closable: true
+            });
+       mainPanel.setActiveTab(newTab);
+
+       // this.redirectTo(record.get('className'));
+    },
 
      init: function(application) {
 
         this.control({
+            
              "mainmenu": {
                  render: this.renderDynamicMenu
-             }
+             },
+              "maintree": {
+                itemclick: this.onTreePanelItemClick
+            }
          });
      }
 });

@@ -19,3 +19,4 @@ Route::any('/menurasxod', 'DataController@menurasxod');
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+Route::any('/doxcategor/list', 'DataController@list');

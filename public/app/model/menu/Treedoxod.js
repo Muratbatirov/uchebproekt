@@ -1,10 +1,10 @@
 Ext.define('MyApp.model.menu.Treedoxod', {
-    extend: 'Ext.data.TreeModel',
+    extend: 'Ext.data.Model',
 
    
 
     fields: [
-        { name: 'id', type: 'int'},
+        { name: 'id'},
         { name: 'name' }
         
     ],

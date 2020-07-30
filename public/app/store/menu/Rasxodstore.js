@@ -12,7 +12,7 @@ Ext.define('MyApp.store.menu.Rasxodstore', {
    reader: {
            
             type: 'json',
-           
+           rootProperty:'children'
             
         }
 },
