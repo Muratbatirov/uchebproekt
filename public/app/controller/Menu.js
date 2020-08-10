@@ -23,7 +23,13 @@ stores: [
         console.log(nod);
         this.getStore('menu.Doxodstore').load(function(records, op, success){
              
-            
+            menu.getRootNode().getChildAt(0).appendChild({
+                         leaf: true,
+                         text: "Категории",
+                         
+                         iconCls:'fa fa-shopping-cart fa-lg'
+                        
+                     });
    
 
                  for (var i=0; i<records.length; i++){
@@ -82,17 +88,28 @@ stores: [
     },
 
    onTreePanelItemClick: function(view, record, item, index, event, options){
-      var mainPanel = this.getMainPanel();
-        console.log('panel');
-       var  newTab = mainPanel.add({
-                xtype: 'otchetgrid',
-               
-                title: 'title',
-                closable: true
-            });
-       mainPanel.setActiveTab(newTab);
+    console.log(record.get('text'));
+    if(record.get('text')==="Категории"){
+          this.redirectTo('doxod/kategorii');
+    }
+//       var mainPanel = this.getMainPanel();
+//         console.log('panel');
+//         var newTab = mainPanel.items.findBy(
+//             function (tab){
+//                 return tab.title === "title";
+//             });
 
-       // this.redirectTo(record.get('className'));
+// if (!newTab){
+//         newTab = mainPanel.add({
+//                 xtype: 'otchetgrid',
+               
+//                 title: 'title',
+//                 closable: true
+//             });
+//         }
+//        mainPanel.setActiveTab(newTab);
+
+       
     },
 
      init: function(application) {

@@ -23,9 +23,22 @@ Ext.define('MyApp.controller.Root', {
    
 
      routes : {
-        'home' : 'onHome'
+        'home' : 'onHome',
+
+        'user|actorsgrid|categoriesgrid|languagesgrid|citiesgrid|countriesgrid|films|salesfilmcategory': {
+            before: 'onBeforeRoute',
+            action: 'onRoute'
+        },
+         'doxod/kategorii' : {
+            action: 'onDoxCatSelect',
+           
+        },
+        
     },
     onHome : function() {
+       
+    },
+     onDoxCatSelect : function() {
         var mainPanel = this.getMainPanel();
         console.log('panel');
        var  newTab = mainPanel.add({

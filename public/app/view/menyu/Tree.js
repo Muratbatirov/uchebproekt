@@ -3,7 +3,7 @@ Ext.define('MyApp.view.menyu.Tree', {
 
     xtype: 'maintree',
     useArrows:true,
-
+    rootVisible: false,
    
    
   

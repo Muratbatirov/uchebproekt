@@ -17,7 +17,7 @@ Ext.define('MyApp.Application', {
         }
     },
 controllers: [
- 
+ 'Root',
  'Menu'
 ],
 defaultToken : 'home',
