@@ -1,25 +1,31 @@
 Ext.define('MyApp.store.menu.Rasxodstore', {
-    extend: 'Ext.data.Store',
+    extend: 'Ext.data.TreeStore',
     
-    
+    storeId: 'rasxod',
     model: 'MyApp.model.menu.Treerasxod',
+    autoLoad:true,
     
     
-     proxy: {
-    type: 'ajax',
+
+  root: {
+        text: 'Peop',
+        expanded: true
+    },
    
-    url: 'menurasxod',
-   reader: {
-           
+ proxy: {
+        type: 'ajax',
+       api: {
+            create: 'createPersons',
+            read: 'menurasxod',
+            update: 'updatePersons',
+            destroy: 'destroyPersons'
+        },
+        reader: {
             type: 'json',
-           rootProperty:'children'
-            
+            rootProperty: 'children'
         }
-},
-
- 
-   
-
-  
+       
+    },
+    
     
 }); 

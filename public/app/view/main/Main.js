@@ -17,7 +17,10 @@ Ext.define('MyApp.view.main.Main', {
     }, 
     {
         region: 'center',
-        xtype: 'mainpanel'
+        xtype: 'contentPanel',
+     
+       
+
     },
     {   
         region: 'west',

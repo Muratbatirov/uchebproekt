@@ -1,10 +1,19 @@
-Ext.define('MyApp.model.menu.Treerasxod', {
-    extend: 'Ext.data.TreeModel',
-
-   
-
+Ext.define('MyApp.store.menu.Breadstore', {
+    extend: 'Ext.data.TreeStore',
     
-      proxy: {
+    storeId: 'breadd',
+    //model: 'MyApp.model.menu.Treerasxod',
+    autoLoad:true,
+    
+    
+
+  root: {
+        text: 'Peop',
+        expanded: true,
+        leaf:false
+    },
+   
+ proxy: {
         type: 'ajax',
        api: {
             create: 'createPersons',
@@ -18,7 +27,6 @@ Ext.define('MyApp.model.menu.Treerasxod', {
         }
        
     },
-   
-
     
-});
+    
+}); 

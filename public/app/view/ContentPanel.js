@@ -1,16 +1,17 @@
 Ext.define('MyApp.view.ContentPanel', {
-    extend: 'Ext.tab.Panel',
-    xtype: 'mainpanel',
-    activeTab: 0,
-    items: [
-        {
-            xtype: 'panel',
-            closable: false,
-            iconCls: 'fa fa-home fa-lg tabIcon',
-            title: 'home',
-            layout: 'fit'
-        }
-    ]
+    extend: 'Ext.panel.Panel',
+     
+      extend: 'Ext.panel.Panel',
+    xtype: 'contentPanel',
+    id: 'content-panel',
+    scrollable: true,
+     
+  
+      
 
+
+
+
+        
    
 });

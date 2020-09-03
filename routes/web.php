@@ -20,3 +20,5 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 Route::any('/doxcategor/list', 'DataController@list');
+Route::any('/doxod/list', 'DataController@doxodlist');
+Route::any('/doxodcombo/list', 'DataController@doxodcombo');

@@ -15,5 +15,14 @@ Ext.define('MyApp.view.main.MainController', {
         if (choice === 'yes') {
             //
         }
-    }
+    },
+     getStatus: function() {
+       var me = this,
+        viewModel = me.getViewModel(),
+            selectedView = viewModel.get('selectedView'),
+            selection = me.preFilterSelection;
+             if (!selectedView && selection) {
+            viewModel.set('selectedView', selection);
+        }
+    },
 });

@@ -5,8 +5,9 @@ Ext.define('MyApp.controller.Root', {
     extend: 'Ext.app.Controller',
      
 
-     init: function() {
-        this.addRef([{
+     
+       refs: [
+         {
             ref: 'main',
             selector: '[xtype=mainmenu]'
         },{
@@ -15,22 +16,24 @@ Ext.define('MyApp.controller.Root', {
         },{
             ref: 'filmsGrid',
             selector: '[xtype=films-grid]'
-        }]);
-        this.callParent();
-    },
+        },
+        {
+            ref: 'conPanel',   
+            selector: 'contentPanel'
+        }
+        ],
+       
+  
     
 
    
 
      routes : {
-        'home' : 'onHome',
+      
 
-        'user|actorsgrid|categoriesgrid|languagesgrid|citiesgrid|countriesgrid|films|salesfilmcategory': {
-            before: 'onBeforeRoute',
-            action: 'onRoute'
-        },
-         'doxod/kategorii' : {
-            action: 'onDoxCatSelect',
+       
+         ':id' : {
+            action: 'onAction',
            
         },
         
@@ -38,16 +41,24 @@ Ext.define('MyApp.controller.Root', {
     onHome : function() {
        
     },
-     onDoxCatSelect : function() {
-        var mainPanel = this.getMainPanel();
-        console.log('panel');
-       var  newTab = mainPanel.add({
-                xtype: 'otchetgrid',
-               
-                title: 'title',
-                closable: true
-            });
-       mainPanel.setActiveTab(newTab);
+     onAction : function(id) {
+    var decod =  decodeURI(id);
+    console.log(decod);
+    function aaaa (item) {
+        console.log(item.data.categorya);
+     return item.data.categorya == decod;
+ }
+        var conPanel =   this.getConPanel();
+        conPanel.removeAll(true);
+        var grid = Ext.create('MyApp.view.doxod.Doxod',{
+                     header:{
+                hidden: true
+              },
+                   
+                 });
+        grid.getStore().getFilters().add(aaaa);
+       conPanel.add(grid);
+      
     },
 
     

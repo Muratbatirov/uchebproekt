@@ -17,7 +17,8 @@
      */
     "requires": [
         "font-awesome",
-         "ux"
+         "ux",
+         "sencha-charts"
     ],
 
     /**

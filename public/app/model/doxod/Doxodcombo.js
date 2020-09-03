@@ -1,12 +1,12 @@
-Ext.define('MyApp.model.doxod.Doxod', {
+Ext.define('MyApp.model.doxod.Doxodcombo', {
     extend: 'MyApp.model.doxod.Base',
 
-    entityName: 'Doxod',
+    entityName: 'Doxodcombo',
 
     fields: [
-        { name: 'categorya' },
-        { name: 'summa' },
+        { name: 'id' },
         { name: 'mesto' },
+        
 
        
         
