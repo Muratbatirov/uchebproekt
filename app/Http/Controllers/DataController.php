@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\DoxCategor;
 use App\RasCategor;
 use App\Balans;
+use Illuminate\Support\Facades\Log;
 class DataController extends Controller
 {
     public function menudoxod(){
@@ -81,6 +82,14 @@ class DataController extends Controller
       
    
            return json_encode($doxod, JSON_UNESCAPED_UNICODE);
+    }
+    public function update(Request $request){
+        
+        
+ 
+      
+   
+            Log::info('Showing user profile for user: '. print_r($request->all(), true));
     }
 
 }

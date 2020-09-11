@@ -3,16 +3,15 @@ Ext.define('MyApp.view.Breadcrumb', {
     xtype: 'navigation-toolbar',
     id: 'navigation-toolbar',
     reference: 'navigation-toolbar',
-   
+    store: 'rasxod',
   bind: {
         selection: '{selectedView}'
     },
- 
+ listeners: {
+            change: 'onBreadChange' 
+        }
  
    
-     
-    // hide glyphs on the buttons (too busy)
-   
-   // store: 'navigation',
+
    
 });

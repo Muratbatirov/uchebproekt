@@ -16,13 +16,61 @@ Ext.define('MyApp.view.main.MainController', {
             //
         }
     },
-     getStatus: function() {
-       var me = this,
-        viewModel = me.getViewModel(),
-            selectedView = viewModel.get('selectedView'),
-            selection = me.preFilterSelection;
-             if (!selectedView && selection) {
-            viewModel.set('selectedView', selection);
-        }
+    onBreadChange: function(view){
+         var me = this,
+
+        viewModel = me.getViewModel();
+         console.log(view.up('mainview').down('mainmenu'));
+        viewModel.set('selectedView', view.getSelection());
+    },
+    //  getStatus: function() {
+    //    var me = this,
+    //     viewModel = me.getViewModel(),
+    //         selectedView = viewModel.get('selectedView'),
+    //         selection = me.preFilterSelection;
+    //         console.log('aaa');
+    //          if (!selectedView && selection) {
+    //         viewModel.set('selectedView', selection);
+    //     }
+    // },
+ //    changeselect:function(node, record, item){
+ //        //var breadcrumb= view.up('mainview').down('navigation-toolbar');
+ //        console.log(this);
+ //        var view = this.getReferences()['navigation-toolbar'];
+ //         var view2 = this.getReferences()['mainmenu'];
+ //        console.log(view.getStore());
+ //    var rec =  view2.getRootNode().findChild('text',record[0].data.text,true);
+ // console.log(rec);
+ // view.setSelection(rec);
+ //    },
+      getStatus: function(view, record, item, index, event, options){
+
+          var me = this;
+          var storebread = Ext.data.StoreManager.lookup('breadtwo');
+          console.log(storebread);
+         storebread.load(function(records, op, success){
+         
+              var store =Ext.create('Ext.data.TreeStore',{
+              root: {
+        text: 'Peop',
+        expanded: true,
+        leaf:false
+    },
+
+                   
+                 }); 
+              var menu = Ext.create('MyApp.view.Breadcrumb',{
+                   cls: 'button-text',
+                    height: 48,
+                   
+                   
+                 });
+             
+               
+             console.log(menu.getStore());
+               
+               var conPanel = view.up('mainview').down('contentPanel');
+               conPanel.addDocked(menu);
+         });
     },
 });

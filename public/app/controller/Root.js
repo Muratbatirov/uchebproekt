@@ -42,8 +42,9 @@ Ext.define('MyApp.controller.Root', {
        
     },
      onAction : function(id) {
+
     var decod =  decodeURI(id);
-    console.log(decod);
+    
     function aaaa (item) {
         console.log(item.data.categorya);
      return item.data.categorya == decod;
@@ -57,6 +58,7 @@ Ext.define('MyApp.controller.Root', {
                    
                  });
         grid.getStore().getFilters().add(aaaa);
+     grid.getViewModel().set('doxodroute', decod);
        conPanel.add(grid);
       
     },

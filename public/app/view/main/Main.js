@@ -1,5 +1,6 @@
 Ext.define('MyApp.view.main.Main', {
     extend: 'Ext.container.Viewport',
+    xtype:'mainview',
     requires:[
         'Ext.tab.Panel',
         'Ext.layout.container.Border',
@@ -18,7 +19,7 @@ Ext.define('MyApp.view.main.Main', {
     {
         region: 'center',
         xtype: 'contentPanel',
-     
+       
        
 
     },

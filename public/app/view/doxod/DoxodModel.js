@@ -8,7 +8,13 @@ Ext.define('Packt.view.security.DoxodModel', {
             model: 'MyApp.model.doxod.Doxodcombo',
             autoLoad: true
         }
-    }
+    },
+    data: {
+       
+       
+        doxodroute: null
+    
+         }
 //    },
 //
 //    formulas: {

@@ -9,8 +9,8 @@ Ext.define('MyApp.model.Base', {
             type: 'ajax',
             api :{
                 read : '{entityName:lowercase}/list',
-                create: '/{entityName:lowercase}/create.php',
-                update: '/{entityName:lowercase}/update.php',
+                create: '{entityName:lowercase}/create.php',
+                update: '{entityName:lowercase}/update',
                 destroy: '/{entityName:lowercase}/destroy.php'
             },
             reader: {

@@ -2,7 +2,7 @@ Ext.define('MyApp.view.menyu.Panel', {
     extend: 'Ext.tree.Panel',
 
     xtype: 'mainmenu',
-    
+    reference: 'mainmenu',
 
    
    
@@ -24,7 +24,16 @@ Ext.define('MyApp.view.menyu.Panel', {
        bind: {
         selection: '{selectedView}'
     },
-    renderer: 'getStatus',
+    viewConfig: {
+        selectionModel: {
+            type: 'treemodel',
+            pruneRemoved: false
+        }
+    },
+    listeners: {
+            render: 'getStatus' ,
+          
+        },
  store: 'rasxod',
    
     header:{

@@ -30,7 +30,8 @@ Ext.create('MyApp.store.menu.Rasxodstore', {
     },
 controllers: [
  'Root',
- 'Menu'
+ 'Menu',
+ 'Doxod'
 ],
 
     onAppUpdate: function () {

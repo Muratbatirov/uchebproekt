@@ -140,59 +140,7 @@ stores: [
                
             }), 1000);
     },
-    onCreatBreadcrumb: function(view, record, item, index, event, options){
-
-          var me = this;
-         this.getStore('menu.Breadstoretwo').load(function(records, op, success){
-         
-              var store =Ext.create('Ext.data.TreeStore',{
-              root: {
-        text: 'Peop',
-        expanded: true,
-        leaf:false
-    },
-
-                   
-                 }); 
-              var menu = Ext.create('MyApp.view.Breadcrumb',{
-                   cls: 'button-text',
-                    height: 48,
-                    store: store
-                   
-                 });
-             
-              
-               Ext.each(records, function(record){
-                 menu.getStore().getRoot().appendChild({
-                         
-                         text: record.data['text'],
-   
-                     });
-
-          }); 
-               for (let t = 0;  t < records.length; t++) {
-                  
-                  
-                   
-                    for (let i = 0;  i < records[t].data.children.length; i++) {
-                       
-                   
-                 menu.getStore().getRoot().getChildAt(t).appendChild({
-                         leaf: true,
-                         text: records[t].data.children[i]['text'],
-                         
-                         iconCls:'fa fa-shopping-cart fa-lg'
-                        
-                     });} 
-}
-          
-               
-               
-               
-               var conPanel = me.getConPanel();
-               conPanel.addDocked(menu);
-         });
-    },
+    
 
      init: function(application) {
 
@@ -206,14 +154,13 @@ stores: [
             // },
             "mainmenu": {
                 itemclick: this.onTrClick,
-                  render: this.onCreatBreadcrumb
+                 // render: this.onCreatBreadcrumb
             },
-            "breadcrumb-toolbar": {
-                render: this.onRen
-            },
-            'navigation-toolbar': {
-                change: 'onBreadChange'
-            },
+            // "breadcrumb-toolbar": {
+            //     render: this.onRen
+            // },
+            
+           
          });
      }
 });
