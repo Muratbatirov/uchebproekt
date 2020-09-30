@@ -57,7 +57,12 @@ Ext.define('MyApp.controller.Root', {
               },
                    
                  });
-        grid.getStore().getFilters().add(aaaa);
+          grid.getStore().getProxy().setExtraParams({
+    'param':decod,
+    'param2':'value 2'
+    });
+       // grid.getStore().getFilters().add(aaaa);
+        console.log(grid);
      grid.getViewModel().set('doxodroute', decod);
        conPanel.add(grid);
       

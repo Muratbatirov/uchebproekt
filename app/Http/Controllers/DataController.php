@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\DoxCategor;
 use App\RasCategor;
 use App\Balans;
+use App\Doxod;
 use Illuminate\Support\Facades\Log;
 class DataController extends Controller
 {
@@ -25,19 +26,32 @@ class DataController extends Controller
    
            return json_encode($root, JSON_UNESCAPED_UNICODE);
     }
-    public function doxodlist(){
+    public function doxodlist(Request $request){
      $doxod = DB::table('doxod')
             ->join('doxcategor', 'doxcategor.id', '=', 'doxod.doxcategor_id' )
-            ->join('users', 'users.id', '=', 'doxcategor.user_id' )
-            ->select( 'doxcategor.text AS categorya',  'summa', 'mesto'  )
-            ->where('users.id', 14)
-            ->get()->toArray();
+            ->join('users', 'users.id', '=', 'doxod.user_id' )
+            ->select( 'doxod.id','doxcategor.text AS categorya',  'summa', 'mesto'  )
+            ->where('doxod.user_id', 14)->where('doxcategor.text', $request->param)
+           ->skip($request->start)
+                ->take(4)
+                ->get()->toArray();
+                 $doxodcount = DB::table('doxod')
+            ->join('doxcategor', 'doxcategor.id', '=', 'doxod.doxcategor_id' )
+            ->join('users', 'users.id', '=', 'doxod.user_id' )
+            ->select( 'doxod.id','doxcategor.text AS categorya',  'summa', 'mesto'  )
+            ->where('doxod.user_id', 14)->where('doxcategor.text', $request->param)
+          
+                ->get()->toArray();
+             $arr = [];
+             $arr['success']=true;
+            $arr['data']=$doxod;
+            $arr['total']= count($doxodcount);
 
             
  
       
    
-           return json_encode($doxod, JSON_UNESCAPED_UNICODE);
+           return json_encode($arr, JSON_UNESCAPED_UNICODE);
     }
     public function doxodcombo(){
     $doxodcombo = Balans::where('user_id', 14)
@@ -85,11 +99,41 @@ class DataController extends Controller
     }
     public function update(Request $request){
         
-        
+         $doxod = Doxod::where('id', $request->id)->first();
+
+            $doxod->summa = $request->summa;
+
+             $doxod->save();
  
       
    
-            Log::info('Showing user profile for user: '. print_r($request->all(), true));
+           // Log::info( print_r($doxod, true));
+    }
+     public function create(Request $request){
+
+        $data= json_decode(stripslashes($request->data));
+
+        foreach ($data as $value){
+         $doxod = new Doxod;
+     $doxod->user_id = 14;
+     $doxod->summa = $value->summa;
+      $doxcatid = DoxCategor::where('user_id', 14 )->where('text', $value->categorya)
+      ->select('id')->first();
+
+       $doxod->doxcategor_id = $doxcatid->id;
+     $doxod->mesto = $value->mesto;
+    
+    $doxod->save();}
+Log::info( print_r($data[0]->summa, true));
+
+     return   json_encode(array(
+    "success" => true
+   
+             ));
+ 
+      
+   
+           
     }
 
 }

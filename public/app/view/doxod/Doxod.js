@@ -7,6 +7,7 @@ Ext.define('MyApp.view.doxod.Doxod', {
        viewModel: {
         type: 'doxod'
     },
+   
     initComponent: function() {
         var me = this;
 

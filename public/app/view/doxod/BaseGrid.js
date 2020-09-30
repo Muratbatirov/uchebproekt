@@ -28,6 +28,11 @@ Ext.define('MyApp.view.doxod.BaseGrid', {
 
         me.dockedItems = [
             {
+                xtype: 'pagingtoolbar',
+                dock: 'bottom',
+                
+               
+            },{
                 xtype: 'toolbar',
                 dock: 'top',
                 itemId: 'topToolbar',
@@ -61,7 +66,8 @@ Ext.define('MyApp.view.doxod.BaseGrid', {
                         itemId: 'clearFilter',
                         text: 'Clear Filters',
                         
-                    }
+                    },
+                    
                 ]
             }
         ];

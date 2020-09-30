@@ -22,4 +22,5 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::any('/doxcategor/list', 'DataController@list');
 Route::any('/doxod/list', 'DataController@doxodlist');
 Route::any('/doxod/update', 'DataController@update');
+Route::any('/doxod/create', 'DataController@create');
 Route::any('/doxodcombo/list', 'DataController@doxodcombo');

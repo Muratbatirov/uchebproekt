@@ -9,14 +9,22 @@ Ext.define('MyApp.model.Base', {
             type: 'ajax',
             api :{
                 read : '{entityName:lowercase}/list',
-                create: '{entityName:lowercase}/create.php',
+                create: '{entityName:lowercase}/create',
                 update: '{entityName:lowercase}/update',
                 destroy: '/{entityName:lowercase}/destroy.php'
             },
             reader: {
                 type: 'json',
-                rootProperty: 'data'
-            }
+                rootProperty: 'data',
+                 totalProperty: 'total'
+            },
+            writer: {
+                type: 'json',
+                writeAllFields: true,
+                encode: true,
+                rootProperty: 'data',
+                allowSingle: false
+            },
             
             
         }
