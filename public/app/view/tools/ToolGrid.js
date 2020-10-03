@@ -1,21 +1,21 @@
-Ext.define('MyApp.view.doxod.BaseGrid', {
+Ext.define('MyApp.view.tools.ToolGrid', {
     extend: 'Ext.grid.Panel', 
-    xtype: 'basegrid',
+    xtype: 'toolgrid',
 
-  
+  store: {
+        type: 'doxcattool'},
     columnLines: true,
     viewConfig: {
         stripeRows: true
     },
 
-    initComponent: function() {
-        var me = this;
+   
 
-        me.selModel = {
+       selModel:{
             selType: 'cellmodel'
-        };
+        },
 
-        me.plugins = [
+        plugins:[
             {
                 ptype: 'cellediting',
                 clicksToEdit: 1,
@@ -25,9 +25,9 @@ Ext.define('MyApp.view.doxod.BaseGrid', {
             {
                 ptype: 'gridfilters'
             }
-        ];
+        ],
 
-        me.dockedItems = [
+        dockedItems:[
             {
                 xtype: 'pagingtoolbar',
                 dock: 'bottom',
@@ -36,11 +36,11 @@ Ext.define('MyApp.view.doxod.BaseGrid', {
             },{
                 xtype: 'toolbar',
                 dock: 'top',
-                itemId: 'topToolbar',
+                itemId: 'topToolsbar',
                 items: [
                     {
                         xtype: 'button',
-                        itemId: 'add',
+                        itemId: 'tooladd',
                         text: 'Add',
                         
                     },
@@ -49,33 +49,37 @@ Ext.define('MyApp.view.doxod.BaseGrid', {
                     },
                     {
                         xtype: 'button',
-                        itemId: 'save',
+                        itemId: 'toolsave',
                         text: 'Save Changes',
                         
                     },
                     {
                         xtype: 'button',
-                        itemId: 'cancel',
+                        itemId: 'toolcancel',
                         text: 'Cancel Changes',
                         
-                    },
-                    {
-                        xtype: 'tbseparator'
-                    },
-                    {
-                        xtype: 'button',
-                        itemId: 'clearFilter',
-                        text: 'Clear Filters',
-                        
-                    },
+                    }
+                    
                     
                 ]
             }
-        ];
+        ],
 
-        me.columns = Ext.Array.merge(
-            me.columns,
-            [
+        columns:[ new Ext.grid.RowNumberer(),
+            {
+                text: 'Категоря',
+                flex: 1,
+                dataIndex: 'categorya',
+                 editor: {
+                    allowBlank: false,
+                    maxLength: 45
+                },
+                filter: {
+                    type: 'string'
+                }
+            },
+          
+            
                 {
                     xtype: 'datecolumn',
                     text: 'Last Update',
@@ -93,16 +97,14 @@ Ext.define('MyApp.view.doxod.BaseGrid', {
                         xtype: 'button',
                        
                         tooltip: 'Delete',
-                        scope: me,
-                        handler: function (btn) {
-                            me.fireEvent('widgetclick', me, btn);
-                        }
+                      
                     }
                 }
-            ]
-        );
+            ],
+      initComponent: function() {
+        var me = this;
 
-        me.getColumnIndexes = function() {
+       me.getColumnIndexes=function() {
             var me = this,
                 columnIndexes = [];
 
@@ -118,7 +120,7 @@ Ext.define('MyApp.view.doxod.BaseGrid', {
             return columnIndexes;
         };
 
-        me.validateRow = function(record, rowIndex){
+        me.validateRow=function(record, rowIndex){
 
             var me = this,
                 view = me.getView(),
@@ -153,7 +155,7 @@ Ext.define('MyApp.view.doxod.BaseGrid', {
             return false;
         };
 
-        me.validate = function(){
+        me.validate=function(){
 
             var me = this,
                 isValid = true,
@@ -176,11 +178,11 @@ Ext.define('MyApp.view.doxod.BaseGrid', {
 
             return error;
         };
-
+         me.callParent(arguments);
+    }
  
 
        
 
-        me.callParent(arguments);
-    }
+       
 });

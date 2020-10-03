@@ -47,18 +47,10 @@ Ext.define('MyApp.view.main.MainController', {
 
           var me = this;
           var storebread = Ext.data.StoreManager.lookup('breadtwo');
-          console.log(storebread);
+         
          storebread.load(function(records, op, success){
          
-              var store =Ext.create('Ext.data.TreeStore',{
-              root: {
-        text: 'Peop',
-        expanded: true,
-        leaf:false
-    },
-
-                   
-                 }); 
+             
               var menu = Ext.create('MyApp.view.Breadcrumb',{
                    cls: 'button-text',
                     height: 48,
@@ -67,7 +59,7 @@ Ext.define('MyApp.view.main.MainController', {
                  });
              
                
-             console.log(menu.getStore());
+           
                
                var conPanel = view.up('mainview').down('contentPanel');
                conPanel.addDocked(menu);

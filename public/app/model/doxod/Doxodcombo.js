@@ -1,5 +1,5 @@
 Ext.define('MyApp.model.doxod.Doxodcombo', {
-    extend: 'MyApp.model.doxod.Base',
+    extend: 'MyApp.model.Base',
 
     entityName: 'Doxodcombo',
 

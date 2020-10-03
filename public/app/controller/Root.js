@@ -29,29 +29,71 @@ Ext.define('MyApp.controller.Root', {
    
 
      routes : {
-      
+          'tools' : {
+            action: 'onActionTool',
+           
+        },
 
        
-         ':id' : {
+         'doxod/dobavit' : {
+            action: 'onActionDobavit',
+           
+        },
+        'doxod/categorii/:id' : {
             action: 'onAction',
            
         },
+    },
+   
+    
+    onActionDobavit: function(){
+       var conPanel =   this.getConPanel();
+        conPanel.removeAll(true);
+        var grid = Ext.create('MyApp.view.doxod.Doxod',{
+                     header:{
+                hidden: true
+              },
+                   
+                 });
         
-    },
-    onHome : function() {
+        grid.getStore().getProxy().setExtraParams({
+    'param':false
+    });
        
+    
+       conPanel.add(grid);
+
+
     },
+     onActionTool: function(){
+       var conPanel =   this.getConPanel();
+        conPanel.removeAll(true);
+        var grid = Ext.create('MyApp.view.tools.ToolGrid',{
+                     header:{
+                hidden: true
+              },
+                   
+                 });
+        
+        
+       
+    
+       conPanel.add(grid);
+
+
+    },
+
+
+
+
      onAction : function(id) {
 
     var decod =  decodeURI(id);
     
-    function aaaa (item) {
-        console.log(item.data.categorya);
-     return item.data.categorya == decod;
- }
+ 
         var conPanel =   this.getConPanel();
         conPanel.removeAll(true);
-        var grid = Ext.create('MyApp.view.doxod.Doxod',{
+        var grid = Ext.create('MyApp.view.doxod.DoxodCat',{
                      header:{
                 hidden: true
               },
@@ -61,8 +103,8 @@ Ext.define('MyApp.controller.Root', {
     'param':decod,
     'param2':'value 2'
     });
-       // grid.getStore().getFilters().add(aaaa);
-        console.log(grid);
+       
+       
      grid.getViewModel().set('doxodroute', decod);
        conPanel.add(grid);
       

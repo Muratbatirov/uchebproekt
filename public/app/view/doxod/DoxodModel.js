@@ -7,7 +7,12 @@ Ext.define('Packt.view.security.DoxodModel', {
         doxodcombo: {
             model: 'MyApp.model.doxod.Doxodcombo',
             autoLoad: true
+        },
+        categcombo: {
+            model: 'MyApp.model.doxod.Categcombo',
+            autoLoad: true
         }
+
     },
     data: {
        

@@ -27,13 +27,15 @@ class DataController extends Controller
            return json_encode($root, JSON_UNESCAPED_UNICODE);
     }
     public function doxodlist(Request $request){
+    if($request->param!='false' and $request->param ){
+
      $doxod = DB::table('doxod')
             ->join('doxcategor', 'doxcategor.id', '=', 'doxod.doxcategor_id' )
             ->join('users', 'users.id', '=', 'doxod.user_id' )
             ->select( 'doxod.id','doxcategor.text AS categorya',  'summa', 'mesto'  )
             ->where('doxod.user_id', 14)->where('doxcategor.text', $request->param)
            ->skip($request->start)
-                ->take(4)
+                ->take(5)
                 ->get()->toArray();
                  $doxodcount = DB::table('doxod')
             ->join('doxcategor', 'doxcategor.id', '=', 'doxod.doxcategor_id' )
@@ -52,6 +54,34 @@ class DataController extends Controller
       
    
            return json_encode($arr, JSON_UNESCAPED_UNICODE);
+         }
+         else{
+          $doxod = DB::table('doxod')
+            ->join('doxcategor', 'doxcategor.id', '=', 'doxod.doxcategor_id' )
+            ->join('users', 'users.id', '=', 'doxod.user_id' )
+            ->select( 'doxod.id','doxcategor.text AS categorya',  'summa', 'mesto'  )
+            ->where('doxod.user_id', 14)
+           ->skip($request->start)
+                ->take(5)
+                ->get()->toArray();
+                 $doxodcount = DB::table('doxod')
+            ->join('doxcategor', 'doxcategor.id', '=', 'doxod.doxcategor_id' )
+            ->join('users', 'users.id', '=', 'doxod.user_id' )
+            ->select( 'doxod.id','doxcategor.text AS categorya',  'summa', 'mesto'  )
+            ->where('doxod.user_id', 14)
+          
+                ->get()->toArray();
+             $arr = [];
+             $arr['success']=true;
+            $arr['data']=$doxod;
+            $arr['total']= count($doxodcount);
+
+            
+ 
+      
+   
+           return json_encode($arr, JSON_UNESCAPED_UNICODE);
+         }
     }
     public function doxodcombo(){
     $doxodcombo = Balans::where('user_id', 14)
@@ -62,17 +92,27 @@ class DataController extends Controller
 "data" => $doxodcombo
 ));
     }
+    public function categcombo(){
+    $doxodcombo = DoxCategor::where('user_id', 14)
+               ->select('id','text')
+              ->get()->toArray();
+   return json_encode(array(
+"success" => true,
+"data" => $doxodcombo
+));
+    }
     public function menurasxod(){
 
         $root = [
              "success"=> true,
-         "children"=>[["text"=>"doxod",'id'=>'doxod'],["text"=>"rasxod",'id'=>'rasxod']]
+         "children"=>[["text"=>"Доход",'expanded'=> true, 'id'=>'doxod','iconCls'=> 'fa fa-donate fa-lg',],["text"=>"rasxod",'expanded'=> true,'id'=>'rasxod'],  
+        ["text"=>"Настройки",'iconCls'=> 'fa fa-tools fa-lg',"leaf"=>true]]
                  ];
           $arr1=[];
-          
+         
     	  $doxod = DoxCategor::select('text')->where('user_id', 14)->get()->toArray();
              for ($x = 0; $x < count($doxod); $x++) {
-              $arr1[$x]= $doxod[$x]+["leaf"=>true];
+              $arr1[$x]= $doxod[$x]+["leaf"=>true]+['iconCls'=> 'fa fa-file-invoice-dollar fa-lg'];
              
              }
  
@@ -84,7 +124,8 @@ class DataController extends Controller
               $arr2[$x]= $rasxod[$x]+["leaf"=>true];
              
              }
-          $root['children'][0]['children'] = $arr1; 
+          $root['children'][0]['children'] = [["text"=>"Доходы по категориям",'iconCls'=> 'fa fa-file-invoice-dollar fa-lg'],["text"=>"Добавить доход",'iconCls'=> 'fa fa-wallet fa-lg',"leaf"=>true]];
+          $root['children'][0]['children'][0]['children']=$arr1;
           $root['children'][1]['children'] = $arr2; 
           
         return json_encode($root, JSON_UNESCAPED_UNICODE);
@@ -134,6 +175,15 @@ Log::info( print_r($data[0]->summa, true));
       
    
            
+    }
+     public function doxcattool(){
+    $categlist = DoxCategor::where('user_id', 14)
+               ->select('id','text AS categorya')
+              ->get()->toArray();
+   return json_encode(array(
+"success" => true,
+"data" => $categlist
+));
     }
 
 }

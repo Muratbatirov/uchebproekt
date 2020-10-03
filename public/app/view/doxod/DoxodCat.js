@@ -1,6 +1,6 @@
-Ext.define('MyApp.view.doxod.Doxod', {
+Ext.define('MyApp.view.doxod.DoxodCat', {
     extend: 'MyApp.view.doxod.BaseGrid',
-    xtype: 'doxodgrid',
+    xtype: 'doxodgridcat',
 
     store: {
         type: 'doxod'},
@@ -17,15 +17,7 @@ Ext.define('MyApp.view.doxod.Doxod', {
                 text: 'Категоря',
                 flex: 1,
                 dataIndex: 'categorya',
-                editor: {
-                    xtype: 'combo',
-                    displayField: 'text',
-               valueField: 'text',
-              editable:false,
-                     bind: {
-                    store: '{categcombo}'},
-                    
-                },
+               
                 filter: {
                     type: 'string'
                 }
@@ -34,8 +26,6 @@ Ext.define('MyApp.view.doxod.Doxod', {
                 text: 'Сумма',
                 flex: 1,
                 dataIndex: 'summa',
-                xtype: 'numbercolumn', 
-                format:'0.00' ,
                 editor: {
                     allowBlank: false,
                     maxLength: 45

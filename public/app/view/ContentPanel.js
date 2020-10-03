@@ -7,8 +7,7 @@ Ext.define('MyApp.view.ContentPanel', {
     scrollable: true,
      
   
-      
-
+     
 
 
 

@@ -43,7 +43,7 @@ Ext.define('MyApp.controller.Doxod', {
         store.insert(0, Ext.create(modelName, {
            categorya: grid.getViewModel().get('doxodroute'), last_update: new Date()
         }));
-
+      
         cellEditing.startEditByPosition({row: 0, column: 2});
 
     },
@@ -55,11 +55,18 @@ Ext.define('MyApp.controller.Doxod', {
             store = grid.getStore();
             store.getProxy().setExtraParams({
     'param':grid.getViewModel().get('doxodroute'),
-    'param2':'value 2'
+    
     });
+            errors = grid.validate();
 
-       
+        if (errors === undefined){
             store.sync();
+        } else {
+            console.log(errors);
+            Ext.Msg.alert(errors);
+        }
+       
+          
      
             
         

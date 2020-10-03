@@ -3,7 +3,7 @@ Ext.define('MyApp.store.menu.Rasxodstore', {
     
     storeId: 'rasxod',
     model: 'MyApp.model.menu.Treerasxod',
-    autoLoad:true,
+   
     
     
 

@@ -11,8 +11,7 @@ Ext.define('MyApp.Application', {
 
     quickTips: false,
 init:function(){
-Ext.create('MyApp.store.menu.Rasxodstore', {
-           storeId: 'rasxod'});
+
 
  Ext.create('MyApp.store.menu.Breadstore', {
             storeId: 'breadd'});

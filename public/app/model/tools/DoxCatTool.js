@@ -1,7 +1,9 @@
-Ext.define('MyApp.model.doxod.Base', {
+Ext.define('MyApp.model.tools.DoxCatTool', {
     extend: 'MyApp.model.Base',
-
+     entityName: 'DoxCatTool',
      fields: [
+        { name: 'id', type: 'int'},
+         { name: 'categorya',type: 'string'},
         {
             name: 'last_update',
             type: 'date',

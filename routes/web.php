@@ -23,4 +23,5 @@ Route::any('/doxcategor/list', 'DataController@list');
 Route::any('/doxod/list', 'DataController@doxodlist');
 Route::any('/doxod/update', 'DataController@update');
 Route::any('/doxod/create', 'DataController@create');
-Route::any('/doxodcombo/list', 'DataController@doxodcombo');
+Route::get('/doxodcombo/list', 'DataController@doxodcombo');
+Route::get('/doxcattool/list', 'DataController@doxcattool');
