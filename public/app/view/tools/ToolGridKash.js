@@ -1,9 +1,9 @@
-Ext.define('MyApp.view.tools.ToolGrid', {
+Ext.define('MyApp.view.tools.ToolGridKash', {
     extend: 'Ext.grid.Panel', 
-    xtype: 'toolgrid',
+    xtype: 'toolgridkash',
 
   store: {
-        type: 'doxcattool'},
+        type: 'kashtool'},
     columnLines: true,
     viewConfig: {
         stripeRows: true
@@ -40,7 +40,7 @@ Ext.define('MyApp.view.tools.ToolGrid', {
                 items: [
                     {
                         xtype: 'button',
-                        itemId: 'tooladd',
+                        itemId: 'tooladdkash',
                         text: 'Add',
                         
                     },
@@ -49,13 +49,13 @@ Ext.define('MyApp.view.tools.ToolGrid', {
                     },
                     {
                         xtype: 'button',
-                        itemId: 'toolsave',
+                        itemId: 'toolsavekash',
                         text: 'Save Changes',
                         
                     },
                     {
                         xtype: 'button',
-                        itemId: 'toolcancel',
+                        itemId: 'toolcancelkash',
                         text: 'Cancel Changes',
                         
                     }
@@ -69,7 +69,7 @@ Ext.define('MyApp.view.tools.ToolGrid', {
             {
                 text: 'Категоря',
                 flex: 1,
-                dataIndex: 'categorya',
+                dataIndex: 'mesto',
                  editor: {
                     allowBlank: false,
                     maxLength: 45

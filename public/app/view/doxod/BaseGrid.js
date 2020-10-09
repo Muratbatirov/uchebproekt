@@ -80,7 +80,7 @@ Ext.define('MyApp.view.doxod.BaseGrid', {
                     xtype: 'datecolumn',
                     text: 'Last Update',
                     width: 150,
-                    dataIndex: 'last_update',
+                    dataIndex: 'updated_at',
                     format: 'Y-m-j H:i:s',
                     filter: true
                 },

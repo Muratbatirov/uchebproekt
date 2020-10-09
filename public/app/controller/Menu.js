@@ -57,6 +57,12 @@ stores: [
          this.redirectTo('doxod/dobavit');
     }else if(record.get('text')==="Настройки"){
          this.redirectTo('tools');
+
+    }
+    else if(record.get('text')==="Баланс"){
+
+         this.redirectTo('balans');
+         
     }
     else{
          this.redirectTo('doxod/categorii/'+record.get('text'));
@@ -75,6 +81,25 @@ stores: [
                 store:store
                
             }), 1000);
+    },
+    onBreadcrumbNavSelectionChange: function(breadcrumb, record) {
+        if(record.get('text')==="Доход"){
+         return;
+    }else if(record.get('text')==="Доходы по категориям"){
+        return;
+    }else if(record.get('text')==="Добавить доход"){
+         this.redirectTo('doxod/dobavit');
+    }else if(record.get('text')==="Настройки"){
+         this.redirectTo('tools');
+    }
+     else if(record.get('text')==="Баланс"){
+     
+         this.redirectTo('balans');
+         
+    }
+    else{
+         this.redirectTo('doxod/categorii/'+record.get('text'));
+    }
     },
     
 
@@ -95,6 +120,9 @@ stores: [
             // "breadcrumb-toolbar": {
             //     render: this.onRen
             // },
+            'navigation-toolbar': {
+                change: 'onBreadcrumbNavSelectionChange'
+            },
             
            
          });

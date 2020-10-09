@@ -20,7 +20,7 @@ Ext.define('MyApp.view.main.MainController', {
          var me = this,
 
         viewModel = me.getViewModel();
-         console.log(view.up('mainview').down('mainmenu'));
+         
         viewModel.set('selectedView', view.getSelection());
     },
     //  getStatus: function() {

@@ -1,9 +1,9 @@
-Ext.define('MyApp.view.tools.ToolGrid', {
+Ext.define('MyApp.view.tools.ToolGridRas', {
     extend: 'Ext.grid.Panel', 
-    xtype: 'toolgrid',
+    xtype: 'toolgridras',
 
   store: {
-        type: 'doxcattool'},
+        type: 'rascattool'},
     columnLines: true,
     viewConfig: {
         stripeRows: true
@@ -40,7 +40,7 @@ Ext.define('MyApp.view.tools.ToolGrid', {
                 items: [
                     {
                         xtype: 'button',
-                        itemId: 'tooladd',
+                        itemId: 'tooladdras',
                         text: 'Add',
                         
                     },
@@ -49,13 +49,13 @@ Ext.define('MyApp.view.tools.ToolGrid', {
                     },
                     {
                         xtype: 'button',
-                        itemId: 'toolsave',
+                        itemId: 'toolsaveras',
                         text: 'Save Changes',
                         
                     },
                     {
                         xtype: 'button',
-                        itemId: 'toolcancel',
+                        itemId: 'toolcancelras',
                         text: 'Cancel Changes',
                         
                     }

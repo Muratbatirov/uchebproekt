@@ -6,9 +6,17 @@ Ext.define('MyApp.view.ContentPanel', {
     id: 'content-panel',
     scrollable: true,
      
-  
-     
+  layout: 'column',
+      bodyPadding: 10,
+defaults: {
+        
+        
+        scrollable: true,
+       
+       
+        title: 'Panel',
 
+    },
 
 
         

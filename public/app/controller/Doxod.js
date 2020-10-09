@@ -48,7 +48,7 @@ Ext.define('MyApp.controller.Doxod', {
 
     },
     onEdit: function(editor, context, options) {
- context.record.set('last_update', new Date());
+ context.record.set('updated_at', new Date());
 },
  onButtonClickSave: function (button, e, options) {
         var grid = button.up('basegrid'),
