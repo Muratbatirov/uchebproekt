@@ -5,7 +5,7 @@ Ext.define('MyApp.view.ContentPanel', {
     xtype: 'contentPanel',
     id: 'content-panel',
     scrollable: true,
-     
+      region: 'center',
   layout: 'column',
       bodyPadding: 10,
 defaults: {

@@ -9,7 +9,9 @@ Ext.define('MyApp.view.main.MainModel', {
     data: {
         name: 'MyApp',
        
-        selectedView: false
+        selectedView: false,
+        click: false,
+        login: true,
     
          }
 

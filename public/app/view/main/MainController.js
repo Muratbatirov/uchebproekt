@@ -61,7 +61,7 @@ Ext.define('MyApp.view.main.MainController', {
                
            
                
-               var conPanel = view.up('mainview').down('contentPanel');
+               var conPanel = view.up('mainoblojka').down('contentPanel');
                conPanel.addDocked(menu);
          });
     },

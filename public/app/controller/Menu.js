@@ -7,16 +7,9 @@ stores: [
     refs: [
         {
             ref: 'mainPanel',
-            selector: 'mainpanel'
+            selector: 'mainoblojka'
         },
-        {
-            ref: 'mainHed',   
-            selector: 'appHeader'
-        },
-        {
-            ref: 'conPanel',   
-            selector: 'contentPanel'
-        },
+       
           {
             ref: 'bredPanel',
             selector: 'navigation-toolbar'
@@ -24,31 +17,17 @@ stores: [
     ],
   
 
-   onTreePanelItemClick: function(view, record, item, index, event, options){
-    console.log(record.get('text'));
-    if(record.get('text')==="Категории"){
-          this.redirectTo('doxod/kategorii');
-    }
-//       var mainPanel = this.getMainPanel();
-//         console.log('panel');
-//         var newTab = mainPanel.items.findBy(
-//             function (tab){
-//                 return tab.title === "title";
-//             });
 
-// if (!newTab){
-//         newTab = mainPanel.add({
-//                 xtype: 'otchetgrid',
-               
-//                 title: 'title',
-//                 closable: true
-//             });
-//         }
-//        mainPanel.setActiveTab(newTab);
+//       var mainPanel = this.getMainPanel();
+
 
        
-    },
+    
     onTrClick: function(view, record, item, index, event, options){
+       var mainPanel = this.getMainPanel();
+
+    mainPanel.getViewModel().set('click', true);
+
       if(record.get('text')==="Доход"){
          return;
     }else if(record.get('text')==="Доходы по категориям"){

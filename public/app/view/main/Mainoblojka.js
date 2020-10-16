@@ -1,31 +1,32 @@
-Ext.define('MyApp.view.main.Main', {
+Ext.define('MyApp.view.main.Mainoblojka', {
     extend: 'Ext.container.Viewport',
-    xtype:'mainview',
+    xtype:'mainoblojka',
     requires:[
-        'Ext.tab.Panel',
+       
         'Ext.layout.container.Border',
 
     ],
-
+   
     controller: 'main',
     viewModel: 'main',
 
     layout: 'border',
-    
+     stateful: true,
+    stateId: 'viewport',
     items: [{
-        region: 'north',
+        region: 'north',  
         xtype: 'appHeader'
     }, 
     {
         region: 'center',
-        xtype: 'contentPanel',
+        xtype: 'contentoblojka',
        
        
 
     },
     {   
-        region: 'west',
-        xtype: 'mainmenu',
+        region: 'south',
+        xtype: 'sitefooter',
         
 
    }

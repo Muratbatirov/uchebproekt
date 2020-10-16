@@ -5,7 +5,7 @@ Ext.define('MyApp.view.menyu.Panel', {
     reference: 'mainmenu',
 
    
-   
+    region: 'west',
     
   title: 'Examples',
     rootVisible: false,

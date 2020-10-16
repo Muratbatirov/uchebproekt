@@ -16,7 +16,7 @@ Route::get('/', function () {
 });
 Route::any('/menudoxod', 'DataController@menudoxod');
 Route::any('/menurasxod', 'DataController@menurasxod');
-Auth::routes();
+
 
 Route::get('/home', 'HomeController@index')->name('home');
 //Route::any('/doxcategor/list', 'DataController@list');
@@ -31,3 +31,8 @@ Route::get('/kashtool/list', 'ToolsController@kashtool');
 Route::get('/chart/list', 'DoxodController@chart');
 Route::get('/balans/list', 'BalansController@list');
 Route::get('/chartbalans/list', 'BalansController@chart');
+Route::get('/redirect', 'Auth\LoginController@redirectToProvider');
+Route::get('/callback', 'Auth\LoginController@handleProviderCallback');
+
+
+Route::get('/home', 'HomeController@index')->name('home');

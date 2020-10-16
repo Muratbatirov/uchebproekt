@@ -18,9 +18,10 @@
     "requires": [
         "font-awesome",
          "ux",
-         "sencha-charts"
+         "sencha-charts",
+         "ext-locale"
     ],
-
+"locale": "ru", 
     /**
      * The relative path to the application's markup file (html, jsp, asp, etc.).
      */
@@ -211,7 +212,12 @@
         {
             "path": "app.js",
             "bundle": true
-        }
+        },
+ {
+ "path": "app/CustomVTypes.js",
+ "includeInBundle": true
+ }
+
     ],
 
     /**

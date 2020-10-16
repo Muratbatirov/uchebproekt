@@ -12,10 +12,7 @@ Ext.define('MyApp.controller.Root', {
             selector: '[xtype=mainmenu]'
         },{
             ref: 'mainPanel',
-            selector: 'mainpanel'
-        },{
-            ref: 'filmsGrid',
-            selector: '[xtype=films-grid]'
+            selector: 'mainoblojka'
         },
         {
             ref: 'conPanel',   
@@ -36,6 +33,13 @@ Ext.define('MyApp.controller.Root', {
    
 
      routes : {
+         'glavnaya':{
+                action: 'onRoot',
+          },
+    
+          'home':{
+                action: 'onHome',
+          },
           'tools' : {
             action: 'onActionTool',
            
@@ -55,11 +59,24 @@ Ext.define('MyApp.controller.Root', {
            
         },
     },
-   
+    onRoot: function(){
+    if(!this.getMainPanel().getViewModel().get('login')){
+ this.redirectTo('home');
+      }
+    
+   },
+
+   onHome: function(){
+    this.userstate();
+    
+   },
     
     onActionDobavit: function(){
-       var conPanel =   this.getConPanel();
-        
+      if(!this.getMainPanel().getViewModel().get('click')){
+  this.userstate();
+      }
+      
+           var conPanel =   this.getConPanel();
         var grid = Ext.create('MyApp.view.doxod.Doxod',{
                      frame: true,
                    columnWidth: 0.5,
@@ -80,9 +97,14 @@ Ext.define('MyApp.controller.Root', {
        conPanel.add(grid);
        conPanel.add(gridchart);
        Ext.resumeLayouts(true);
+   var mainPanel = this.getMainPanel();
 
+    mainPanel.getViewModel().set('click', false);
     },
     onActionBalans: function(){
+       if(!this.getMainPanel().getViewModel().get('click')){
+  this.userstate();
+      }
     var conPanel =   this.getConPanel();
     conPanel.removeAll(true);
           var panel = Ext.create('Ext.panel.Panel',{
@@ -174,8 +196,14 @@ Ext.define('MyApp.controller.Root', {
           });
 
 conPanel.add(panel);conPanel.add(panelchart);
+  var mainPanel = this.getMainPanel();
+
+    mainPanel.getViewModel().set('click', false);
     },
      onActionTool: function(){
+       if(!this.getMainPanel().getViewModel().get('click')){
+  this.userstate();
+      }
        var conPanel =   this.getConPanel();
         conPanel.removeAll(true);
         var grid = Ext.create('MyApp.view.tools.ToolGrid',{
@@ -200,7 +228,9 @@ conPanel.add(panel);conPanel.add(panelchart);
        conPanel.add(grid);
        conPanel.add(gridras);
        conPanel.add(gridkash);
+  var mainPanel = this.getMainPanel();
 
+    mainPanel.getViewModel().set('click', false);
 
     },
 
@@ -208,7 +238,9 @@ conPanel.add(panel);conPanel.add(panelchart);
 
 
      onAction : function(id) {
-
+ if(!this.getMainPanel().getViewModel().get('click')){
+  this.userstate();
+      }
     var decod =  decodeURI(id);
     
  
@@ -226,8 +258,24 @@ conPanel.add(panel);conPanel.add(panelchart);
        
      grid.getViewModel().set('doxodroute', decod);
        conPanel.add(grid);
+         var mainPanel = this.getMainPanel();
+
+    mainPanel.getViewModel().set('click', false);
       
     },
+    userstate: function(){
+            var panel =   Ext.ComponentQuery.query('mainoblojka');
+        var treepanel =  Ext.create('MyApp.view.menyu.Panel');
+       var contentpanel =  Ext.create('MyApp.view.ContentPanel');
+       var headeruser =  Ext.create('MyApp.view.HeaderUser');
+          Ext.suspendLayouts();
+         panel[0].remove('contentoblojka');
+          panel[0].down('appHeader').destroy();
+          panel[0].add(headeruser);
+         panel[0].add(treepanel);
+         panel[0].add(contentpanel);
+  Ext.resumeLayouts(true);
+    }
 
     
 });
