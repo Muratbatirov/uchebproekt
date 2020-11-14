@@ -1,7 +1,7 @@
 Ext.define('MyApp.view.tools.ToolGridRas', {
     extend: 'Ext.grid.Panel', 
     xtype: 'toolgridras',
-
+ title: 'Категории расходов',
   store: {
         type: 'rascattool'},
     columnLines: true,

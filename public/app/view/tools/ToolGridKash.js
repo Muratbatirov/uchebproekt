@@ -1,7 +1,7 @@
 Ext.define('MyApp.view.tools.ToolGridKash', {
     extend: 'Ext.grid.Panel', 
     xtype: 'toolgridkash',
-
+ title: 'Категории кашелков',
   store: {
         type: 'kashtool'},
     columnLines: true,

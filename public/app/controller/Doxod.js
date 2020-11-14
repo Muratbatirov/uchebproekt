@@ -25,8 +25,12 @@ Ext.define('MyApp.controller.Doxod', {
                click: me.onButtonClickSave
             },
             "basegrid": {
-                         edit: me.onEdit
-                         }
+                         edit: me.onEdit,
+                         widgetclick: me.onWidgetClick
+                         },
+         'basegrid button#cancel': {
+                click: me.onButtonClickCancel
+            },
            
         });
 
@@ -60,17 +64,29 @@ Ext.define('MyApp.controller.Doxod', {
             errors = grid.validate();
 
         if (errors === undefined){
-            store.sync();
+            store.sync({success: function(){
+                 Ext.ComponentQuery.query('doxdobavit')[0].getStore().load();
+         Ext.ComponentQuery.query('doxdobavit')[0].redraw();
+     }});
         } else {
             console.log(errors);
             Ext.Msg.alert(errors);
         }
-       
           
-     
+         
             
         
     },
+      onButtonClickCancel: function (button, e, options) {
+        button.up('basegrid').getStore().reload();
+    },
+    onWidgetClick: function(grid, button){
 
+        var store = grid.getStore(),
+            rec = button.getWidgetRecord();
+
+        store.remove(rec);
+        Ext.Msg.alert('Delete', 'Save the changes to persist the removed record.');
+    },
  
 });

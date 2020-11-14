@@ -1,7 +1,7 @@
 Ext.define('MyApp.view.doxod.DoxodCat', {
     extend: 'MyApp.view.doxod.BaseGrid',
     xtype: 'doxodgridcat',
-
+ title: 'Доход',
     store: {
         type: 'doxod'},
        viewModel: {

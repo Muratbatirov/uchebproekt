@@ -1,6 +1,11 @@
 Ext.define('MyApp.model.Base', {
     extend: 'Ext.data.Model',
-
+    fields: [
+        {
+            name: 'id',
+            
+        }
+    ],
 
     schema: {
         namespace: 'Packt.model',
@@ -11,7 +16,7 @@ Ext.define('MyApp.model.Base', {
                 read : '{entityName:lowercase}/list',
                 create: '{entityName:lowercase}/create',
                 update: '{entityName:lowercase}/update',
-                destroy: '/{entityName:lowercase}/destroy.php'
+                destroy: '{entityName:lowercase}/delete'
             },
             reader: {
                 type: 'json',

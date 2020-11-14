@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateBalansControlsTable extends Migration
+class CreateBalanscontrolTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,11 @@ class CreateBalansControlsTable extends Migration
      */
     public function up()
     {
-        Schema::create('balans_controls', function (Blueprint $table) {
-            $table->increments('id');
+        Schema::create('balanscontrol', function (Blueprint $table) {
+             $table->increments('id');
             $table->integer('user_id')->unsigned();
             $table->string('mesto',20);  
-            $table->integer('summa');  
+           $table->integer('summa');
             $table->timestamps();
             $table->foreign('user_id')->references('id')->on('users');
         });
@@ -30,6 +30,6 @@ class CreateBalansControlsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('balans_controls');
+        Schema::dropIfExists('balanscontrol');
     }
 }

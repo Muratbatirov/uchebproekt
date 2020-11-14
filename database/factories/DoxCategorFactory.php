@@ -16,7 +16,7 @@ use Faker\Generator as Faker;
 
 $factory->define(App\DoxCategor::class, function (Faker $faker) {
     return [
-        'name' => $faker->unique()->randomElement($array = array ('Зарплата','Премия','Бизнес-2','Доход от бизнеса','Иные даходы', 'Дивиденды', 'Аванс', 'Заработная плата' , 'Грант','Cтипендия', 'Пенсия')),
+        'text' => $faker->unique()->randomElement($array = array ('Зарплата','Премия','Бизнес-2','Доход от бизнеса','Иные даходы', 'Дивиденды', 'Аванс', 'Заработная плата' , 'Грант','Cтипендия', 'Пенсия')),
        
     ];
 });

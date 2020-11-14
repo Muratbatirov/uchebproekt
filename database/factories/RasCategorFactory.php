@@ -16,7 +16,7 @@ use Faker\Generator as Faker;
 
 $factory->define(App\RasCategor::class, function (Faker $faker) {
     return [
-        'name' => $faker->unique()->randomElement($array = array ('Продукты питания','Коммунальные услуги','Транспорт','Одежда ', 'Телефон' ,'Для здоровья' , 'Книги' ,'Интернет' , 'Косметика' ,'Салоны красоты', 'Путешествия')),
+        'text' => $faker->unique()->randomElement($array = array ('Продукты питания','Коммунальные услуги','Транспорт','Одежда ', 'Телефон' ,'Для здоровья' , 'Книги' ,'Интернет' , 'Косметика' ,'Салоны красоты', 'Путешествия')),
        
     ];
 });

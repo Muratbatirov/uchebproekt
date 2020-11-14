@@ -20,7 +20,7 @@ class ToolsController extends Controller
 
     
      public function doxcattool(){
-    $categlist = DoxCategor::where('user_id', 14)
+    $categlist = DoxCategor::where('user_id', 1)
                ->select('id','text AS categorya')
               ->get()->toArray();
    return json_encode(array(
@@ -29,7 +29,7 @@ class ToolsController extends Controller
 ),JSON_UNESCAPED_UNICODE);
     }
      public function rascattool(){
-    $categlist = RasCategor::where('user_id', 14)
+    $categlist = RasCategor::where('user_id', 1)
                ->select('id','text AS categorya')
               ->get()->toArray();
    return json_encode(array(
@@ -38,7 +38,7 @@ class ToolsController extends Controller
 ),JSON_UNESCAPED_UNICODE);
     }
     public function kashtool(){
-    $categlist = Balans::where('user_id', 14)
+    $categlist = Balans::where('user_id', 1)
                ->select('id','mesto')
               ->get()->toArray();
    return json_encode(array(

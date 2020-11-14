@@ -41,7 +41,7 @@ Ext.define('MyApp.view.doxod.BaseGrid', {
                     {
                         xtype: 'button',
                         itemId: 'add',
-                        text: 'Add',
+                         text: 'Добавить',
                         
                     },
                     {
@@ -50,24 +50,16 @@ Ext.define('MyApp.view.doxod.BaseGrid', {
                     {
                         xtype: 'button',
                         itemId: 'save',
-                        text: 'Save Changes',
+                        text: 'Сохранить',
                         
                     },
                     {
                         xtype: 'button',
                         itemId: 'cancel',
-                        text: 'Cancel Changes',
+                        text: 'Сбросить',
                         
                     },
-                    {
-                        xtype: 'tbseparator'
-                    },
-                    {
-                        xtype: 'button',
-                        itemId: 'clearFilter',
-                        text: 'Clear Filters',
-                        
-                    },
+                  
                     
                 ]
             }
@@ -84,14 +76,14 @@ Ext.define('MyApp.view.doxod.BaseGrid', {
                     format: 'Y-m-j H:i:s',
                     filter: true
                 },
-                {
+                  {
                     xtype: 'widgetcolumn',
                     width: 50,
                     sortable: false,
                     menuDisabled: true,
                     widget: {
                         xtype: 'button',
-                       
+                    iconCls: 'fa fa-trash-alt fa-lg',
                         tooltip: 'Delete',
                         scope: me,
                         handler: function (btn) {
@@ -99,6 +91,7 @@ Ext.define('MyApp.view.doxod.BaseGrid', {
                         }
                     }
                 }
+               
             ]
         );
 

@@ -1,13 +1,17 @@
 Ext.define('MyApp.view.charts.DoxDobavitChart', {
     extend: 'Ext.chart.PolarChart',
     xtype: 'doxdobavit',
+requires: [
+ 'MyApp.overrides.chart.ChartOveride'
+],
+  columnWidth: 1,
 
    legend: {
         docked: 'bottom'
     },
     interactions: ['rotate'],
     bind: {
-                    store: '{salesFilmCategory}'},
+                    store: '{doxodchartstore}'},
     width: '100%',
         height: 500,
     insetPadding: 30,

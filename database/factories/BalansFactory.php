@@ -16,8 +16,7 @@ use Faker\Generator as Faker;
 
 $factory->define(App\Balans::class, function (Faker $faker) {
     return [
-        'summa' => $faker->numberBetween($min = 1000000, $max = 500000),
-        'vid' => $faker->numberBetween($min = 1000000, $max = 500000),
+     
         
         
     ];

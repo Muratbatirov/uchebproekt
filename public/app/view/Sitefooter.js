@@ -5,7 +5,7 @@ Ext.define('MyApp.view.Sitefooter', {
    
     items: [{
             xtype: 'component',
-            html: 'ccccccc'
+            html: 'Footer'
     
    }
     ]

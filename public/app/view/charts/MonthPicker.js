@@ -62,7 +62,9 @@
             }
             me.collapse();
            
-             var chartpanel = Ext.ComponentQuery.query('doxdobavit');
+            var chartpanel = this.up().up().items.getRange();
+//var chartpanel = this.up('contentPanel', 2)
+console.log( this.up().up().items.getRange()[0]);
              chartpanel[0].getStore().getProxy().setExtraParams({
    'meses':me.selectMonth.getMonth(),
    'year':me.selectMonth.getFullYear()

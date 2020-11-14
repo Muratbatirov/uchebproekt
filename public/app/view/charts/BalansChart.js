@@ -2,8 +2,8 @@ Ext.define('MyApp.view.charts.BalansChart', {
     extend: 'Ext.chart.CartesianChart',
     xtype: 'balanschart',
 
-  
-        width: 500,
+   columnWidth: 1,
+        width: '100%',
         height: 500,
         interactions: {
             type: 'panzoom',
@@ -14,19 +14,21 @@ Ext.define('MyApp.view.charts.BalansChart', {
         },
       bind: {
                     store: '{balanschart}'},
+                    legend: {
+            type: 'sprite',
+            docked: 'right'
+        },
         innerPadding: {
-            left: 40,
-            right: 40,
-            top:40
+            left: 10,
+            right: 10,
+            top:10
         },
         captions: {
-            title: 'Line Charts - Basic Line',
-            credits: {
-                text: 'Data: Browser Stats 2012\nSource: http://www.w3schools.com/',
-                align: 'left'
-            }
+            title: 'Годовой график изменение баланса',
+            
         },
         axes: [{
+            title: 'Сумма',
             type: 'numeric',
             position: 'left',
             grid: true,
@@ -34,6 +36,7 @@ Ext.define('MyApp.view.charts.BalansChart', {
            
         }, {
             type: 'category',
+              title: 'Месяц',
             position: 'bottom',
             grid: true,
             label: {
@@ -42,28 +45,6 @@ Ext.define('MyApp.view.charts.BalansChart', {
                 }
             }
         }],
-        series: [{
-            type: 'line',
-            xField: 'month',
-            yField: 'summa',
-            style: {
-                lineWidth: 2
-            },
-            marker: {
-                radius: 4,
-                lineWidth: 2
-            },
-            label: {
-                field: 'summa',
-                display: 'over'
-            },
-            highlight: {
-                fillStyle: '#000',
-                radius: 5,
-                lineWidth: 2,
-                strokeStyle: '#fff'
-            },
-          
-        }],
+         
       
 });   

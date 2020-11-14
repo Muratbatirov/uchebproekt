@@ -28,23 +28,30 @@ stores: [
 
     mainPanel.getViewModel().set('click', true);
 
-      if(record.get('text')==="Доход"){
+      if(record.get('text')==="Доход" || record.get('text')==="Расход" || 
+        record.get('text')==="Доходы по категориям" || record.get('text')==="Расходы по категориям" ){
          return;
-    }else if(record.get('text')==="Доходы по категориям"){
-        return;
     }else if(record.get('text')==="Добавить доход"){
          this.redirectTo('doxod/dobavit');
-    }else if(record.get('text')==="Настройки"){
-         this.redirectTo('tools');
-
-    }
-    else if(record.get('text')==="Баланс"){
+    } else if(record.get('text')==="Баланс"){
 
          this.redirectTo('balans');
          
     }
+    else if(record.get('text')==="Добавить расход"){
+         this.redirectTo('rasxod/dobavit');
+    }else if(record.get('text')==="Настройки"){
+         this.redirectTo('tools');
+
+    }
+   
     else{
-         this.redirectTo('doxod/categorii/'+record.get('text'));
+      if(record.parentNode.get('text')==="Доходы по категориям"){
+           this.redirectTo('doxod/categorii/'+record.get('text'));
+      }else if(record.parentNode.get('text')==="Расходы по категориям"){
+           this.redirectTo('rasxod/categorii/'+record.get('text'));
+      }
+        
     }
         
        
@@ -62,22 +69,26 @@ stores: [
             }), 1000);
     },
     onBreadcrumbNavSelectionChange: function(breadcrumb, record) {
-        if(record.get('text')==="Доход"){
+        if(record.get('text')==="Доход" || record.get('text')==="Расход" || 
+        record.get('text')==="Доходы по категориям" || record.get('text')==="Расходы по категориям"){
          return;
-    }else if(record.get('text')==="Доходы по категориям"){
-        return;
     }else if(record.get('text')==="Добавить доход"){
          this.redirectTo('doxod/dobavit');
     }else if(record.get('text')==="Настройки"){
          this.redirectTo('tools');
-    }
-     else if(record.get('text')==="Баланс"){
-     
+
+    } else if(record.get('text')==="Баланс"){
+
          this.redirectTo('balans');
          
     }
+    
     else{
-         this.redirectTo('doxod/categorii/'+record.get('text'));
+        if(record.parentNode.get('text')==="Доходы по категориям"){
+           this.redirectTo('doxod/categorii/'+record.get('text'));
+      } else if(record.parentNode.get('text')==="Расходы по категориям"){
+           this.redirectTo('rasxod/categorii/'+record.get('text'));
+      }
     }
     },
     

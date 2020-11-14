@@ -1,17 +1,17 @@
 Ext.define('MyApp.view.charts.BalansChartpanel', {
     extend: 'Ext.panel.Panel',
-    xtype: 'chartpanel',
-
+    xtype: 'balanschartpanel',
+title: "График",
     requires: [
         'MyApp.view.charts.BalansChart',
-        
+        'MyApp.view.charts.YearPickerbal',
         
     ],
 
-   
+     layout: 'column',
     
      viewModel: {
-        type: 'sales-film-category'
+        type: 'chartmodel'
     },
 
    header: {
@@ -20,7 +20,7 @@ Ext.define('MyApp.view.charts.BalansChartpanel', {
             items: [
                
                 {
-                    xtype: 'monthfield',
+                    xtype: 'yearfieldbal',
                     
                    
                 },

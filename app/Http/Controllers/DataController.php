@@ -35,12 +35,12 @@ class DataController extends Controller
 
         $root = [
              "success"=> true,
-         "children"=>[["text"=>"Баланс", "leaf"=>true,'id'=>'balans','iconCls'=> 'fa fa-briefcase fa-lg'],["text"=>"Доход",'expanded'=> true, 'id'=>'doxod','iconCls'=> 'fa fa-donate fa-lg'],["text"=>"rasxod",'expanded'=> true,'iconCls'=> 'fa fa-shopping-cart fa-lg','id'=>'rasxod'],  
+         "children"=>[["text"=>"Баланс", "leaf"=>true,'id'=>'balans','iconCls'=> 'fa fa-briefcase fa-lg'],["text"=>"Доход",'expanded'=> true, 'id'=>'doxod','iconCls'=> 'fa fa-donate fa-lg'],["text"=>"Расход",'expanded'=> true,'iconCls'=> 'fa fa-shopping-cart fa-lg','id'=>'Расход'],  
         ["text"=>"Настройки",'iconCls'=> 'fa fa-tools fa-lg',"leaf"=>true]]
                  ];
           $arr1=[];
          
-    	  $doxod = DoxCategor::select('text')->where('user_id', 14)->get()->toArray();
+    	  $doxod = DoxCategor::select('text')->where('user_id', 1)->get()->toArray();
              for ($x = 0; $x < count($doxod); $x++) {
               $arr1[$x]= $doxod[$x]+["leaf"=>true]+['iconCls'=> 'fa fa-file-invoice-dollar fa-lg'];
              
@@ -48,7 +48,7 @@ class DataController extends Controller
  
 
 
-        $rasxod = RasCategor::select('text')->where('user_id', 14)->get()->toArray();
+        $rasxod = RasCategor::select('text')->where('user_id', 1)->get()->toArray();
        
         $arr2=[];
          for ($x = 0; $x < count($rasxod); $x++) {

@@ -75,16 +75,7 @@ Ext.define('MyApp.view.login.LoginController', {
         var view = this.getView();
         view.unmask();
         view.close();
-        var panel =  Ext.ComponentQuery.query('mainoblojka');
-        var treepanel =  Ext.create('MyApp.view.menyu.Panel');
-       var contentpanel =  Ext.create('MyApp.view.ContentPanel');
-       var headeruser =  Ext.create('MyApp.view.HeaderUser');
-        
-         panel[0].remove('contentoblojka');
-          panel[0].remove('appHeader');
-          panel[0].add(headeruser);
-         panel[0].add(treepanel);
-         panel[0].add(contentpanel);
+     MyApp.app.getController('Menu').redirectTo('home');
 
         
     }

@@ -16,9 +16,8 @@ use Faker\Generator as Faker;
 
 $factory->define(App\Doxod::class, function (Faker $faker) {
     return [
-        'summa' => $faker->numberBetween($min = 1000000, $max = 500000),
-        'mesto' => $faker->randomElement($array = array ('nalichnie','plastik_1','plastik_2')),
-        'data' => $faker->dateTimeBetween('-2 months','-1 days'),
-       
+        'summa' => $faker->numberBetween($min = 500000, $max = 1000000),
+        'mesto' => $faker->randomElement($array = array ('Наличные','Пластик-1','Пластик-2')),
+       'updated_at' => $faker->dateTimeBetween($startDate = '-1 years', $endDate = 'now', $timezone = null)
     ];
 });

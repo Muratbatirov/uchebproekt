@@ -3,14 +3,29 @@
  * calls Ext.application(). This is the ideal place to handle application launch and
  * initialization details.
  */
- 
+  Ext.require('Ext.app.*');
+ Ext.require('Ext.layout.*');
+Ext.require('Ext.chart.*');
+Ext.require('Ext.data.*');
+Ext.require('MyApp.view.main.Mainoblojka');
+Ext.require('Ext.ux.*');
+Ext.require('Ext.grid.*');
+Ext.require('Ext.panel.*');
+
+Ext.require('Ext.grid.*');
+Ext.require('Ext.form.field.Tag'); 
+Ext.require('Ext.window.*');
+
+
 Ext.define('MyApp.Application', {
     extend: 'Ext.app.Application',
 
     name: 'MyApp',
 
     quickTips: false,
-    defaultToken: 'glavnaya',
+    requires: [
+ 'MyApp.overrides.chart.ChartOveride'
+],
 init:function(){
 
 
@@ -31,7 +46,8 @@ init:function(){
 controllers: [
  'Root',
  'Menu',
- 'Doxod'
+ 'Doxod',
+ 'Rasxod'
 ],
 
   

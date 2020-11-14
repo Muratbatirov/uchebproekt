@@ -15,7 +15,8 @@ Ext.define('MyApp.view.HeaderUser', {
             text: 'Выход',
            flex: 1,
            handler: function() {
-            
+         MyApp.app.getController('Menu').redirectTo('glavnaya');
+          
 }
     
    }

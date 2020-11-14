@@ -36,7 +36,7 @@ class User extends Authenticatable implements MustVerifyEmail
     ];
      public function balans()
   {
-    return $this->hasOne('App\Balans');
+    return $this->hasMany('App\Balans');
   }
   public function doxod() {
     return $this->hasMany('App\Doxod');

@@ -22,18 +22,19 @@ class DoxodController extends Controller
      $doxod = DB::table('doxod')
             ->join('doxcategor', 'doxcategor.id', '=', 'doxod.doxcategor_id' )
             ->join('users', 'users.id', '=', 'doxod.user_id' )
-            ->select( 'doxod.id','doxcategor.text AS categorya',  'summa', 'mesto'  )
-            ->where('doxod.user_id', 14)->where('doxcategor.text', $request->param)
+            ->select( 'doxod.id','doxcategor.text AS categorya',  'summa', 'mesto','doxod.updated_at'  )
+            ->where('doxod.user_id', 1)->where('doxcategor.text', $request->param)
            ->skip($request->start)
                 ->take(10)
                 ->get()->toArray();
-                 $doxodcount = DB::table('doxod')
+                $doxodcount = DB::table('doxod')
             ->join('doxcategor', 'doxcategor.id', '=', 'doxod.doxcategor_id' )
             ->join('users', 'users.id', '=', 'doxod.user_id' )
             ->select( 'doxod.id','doxcategor.text AS categorya',  'summa', 'mesto'  )
             ->where('doxod.user_id', 14)->where('doxcategor.text', $request->param)
           
                 ->get()->toArray();
+              
              $arr = [];
              $arr['success']=true;
             $arr['data']=$doxod;
@@ -50,7 +51,7 @@ class DoxodController extends Controller
             ->join('doxcategor', 'doxcategor.id', '=', 'doxod.doxcategor_id' )
             ->join('users', 'users.id', '=', 'doxod.user_id' )
             ->select( 'doxod.id','doxcategor.text AS categorya',  'summa', 'mesto', 'doxod.updated_at' )
-            ->where('doxod.user_id', 14)->orderBy('doxod.updated_at', 'DESC')
+            ->where('doxod.user_id', 1)->orderBy('doxod.updated_at', 'DESC')
            ->skip($request->start)
                 ->take(10)
                 ->get()->toArray();
@@ -58,7 +59,7 @@ class DoxodController extends Controller
             ->join('doxcategor', 'doxcategor.id', '=', 'doxod.doxcategor_id' )
             ->join('users', 'users.id', '=', 'doxod.user_id' )
             ->select( 'doxod.id','doxcategor.text AS categorya',  'summa', 'mesto'  )
-            ->where('doxod.user_id', 14)
+            ->where('doxod.user_id', 1)
           
                 ->get()->toArray();
              $arr = [];
@@ -74,7 +75,7 @@ class DoxodController extends Controller
          }
     }
     public function doxodcombo(){
-    $doxodcombo = Balans::where('user_id', 14)
+    $doxodcombo = Balans::where('user_id', 1)
                ->select('id','mesto')
               ->get()->toArray();
    return json_encode(array(
@@ -83,7 +84,7 @@ class DoxodController extends Controller
 ));
     }
     public function categcombo(){
-    $doxodcombo = DoxCategor::where('user_id', 14)
+    $doxodcombo = DoxCategor::where('user_id', 1)
                ->select('id','text')
               ->get()->toArray();
    return json_encode(array(
@@ -94,14 +95,36 @@ class DoxodController extends Controller
   
     
     public function update(Request $request){
-        
-         $doxod = Doxod::where('id', $request->id)->first();
+         $data= json_decode(stripslashes($request->data));
+          foreach ($data as $value){
+         $doxod = Doxod::where('id', $value->id)->first();
 
-            $doxod->summa = $request->summa;
+            $doxod->summa = $value->summa;
 
              $doxod->save();
  
-      
+      }
+       return   json_encode(array(
+    "success" => true
+   
+             ));
+   
+           // Log::info( print_r($doxod, true));
+    }
+    public function delete(Request $request){
+         $data= json_decode(stripslashes($request->data));
+          foreach ($data as $value){
+         $doxod = Doxod::where('id', $value->id)->first();
+
+            $doxod->delete();
+
+             
+ 
+      }
+       return   json_encode(array(
+    "success" => true
+   
+             ));
    
            // Log::info( print_r($doxod, true));
     }
@@ -111,19 +134,18 @@ class DoxodController extends Controller
 
         foreach ($data as $value){
          $doxod = new Doxod;
-     $doxod->user_id = 14;
+     $doxod->user_id = 1;
      $doxod->summa = $value->summa;
      $d = new DateTime($value->updated_at, new DateTimeZone('Asia/Tashkent'));
        $d ->add(new DateInterval("PT5H"));
       $doxod->updated_at = $d;
-      $doxcatid = DoxCategor::where('user_id', 14 )->where('text', $value->categorya)
+      $doxcatid = DoxCategor::where('user_id', 1 )->where('text', $value->categorya)
       ->select('id')->first();
 
        $doxod->doxcategor_id = $doxcatid->id;
      $doxod->mesto = $value->mesto;
     
     $doxod->save();}
-Log::info( print_r($data[0]->summa, true));
 
      return   json_encode(array(
     "success" => true
@@ -140,7 +162,7 @@ Log::info( print_r($data[0]->summa, true));
     public function chart(Request $request){
 
      $doxodsum= DB::table('doxod')->join('doxcategor', 'doxcategor.id', '=', 'doxod.doxcategor_id' )
-            ->where('doxod.user_id', 14)->select(  'doxcategor.text AS categorya',  DB::raw("SUM(summa) as summa"))
+            ->where('doxod.user_id', 1)->select(  'doxcategor.text AS categorya',  DB::raw("SUM(summa) as summa"))
             
             ->whereYear('doxod.updated_at', '=', $request->year)->whereMonth('doxod.updated_at', '=', $request->meses+1)
             ->groupBy('doxcategor.text')->get();
@@ -152,6 +174,22 @@ Log::info( print_r($data[0]->summa, true));
 "success" => true,
 "data" => $doxodsum
 ),JSON_UNESCAPED_UNICODE);
+    }
+     public function chartcat(Request $request){
+
+     $doxodsum= DB::table('doxod')->join('doxcategor', 'doxcategor.id', '=', 'doxod.doxcategor_id' )
+            ->where('doxod.user_id', 1)->select(  DB::raw('MONTH(doxod.updated_at) as month'),  DB::raw("SUM(doxod.summa) as summa"))
+            
+            ->whereYear('doxod.updated_at', '=', $request->year)->where('doxcategor.text', $request->param)
+            ->groupBy('month')->get();
+   
+
+
+
+   return array(
+"success" => true,
+"data" => $doxodsum
+);
     }
 
 }

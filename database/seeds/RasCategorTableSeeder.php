@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
-
+use Illuminate\Support\Facades\DB;
 class RasCategorTableSeeder extends Seeder
 {
     /**
@@ -11,7 +11,26 @@ class RasCategorTableSeeder extends Seeder
      */
     public function run()
     {
-        
+          DB::table('rascategor')->insert([
+       'user_id' => 1,
+      'text' => 'Продукты питания'
+    ]);
+           DB::table('rascategor')->insert([
+       'user_id' => 1,
+      'text' => 'Коммунальные услуги'
+    ]);
+            DB::table('rascategor')->insert([
+       'user_id' => 1,
+      'text' =>'Транспорт'
+    ]);
+             DB::table('rascategor')->insert([
+       'user_id' => 1,
+      'text' => 'Одежда'
+    ]);
+              DB::table('rascategor')->insert([
+       'user_id' => 1,
+      'text' => 'Телефон'
+    ]);
     }
          
       

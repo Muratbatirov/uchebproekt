@@ -1,7 +1,7 @@
 Ext.define('MyApp.view.charts.Chartpanel', {
     extend: 'Ext.panel.Panel',
     xtype: 'chartpanel',
-
+title: "График",
     requires: [
         'MyApp.view.charts.ChartModel',
         'MyApp.view.charts.DoxDobavitChart',
@@ -9,10 +9,10 @@ Ext.define('MyApp.view.charts.Chartpanel', {
         
     ],
 
-   
+    layout: 'column',
     
      viewModel: {
-        type: 'sales-film-category'
+        type: 'chartmodel'
     },
 
    header: {

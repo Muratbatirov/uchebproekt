@@ -1,7 +1,7 @@
 Ext.define('MyApp.view.tools.ToolGrid', {
     extend: 'Ext.grid.Panel', 
     xtype: 'toolgrid',
-
+ title: 'Категории доходов',
   store: {
         type: 'doxcattool'},
     columnLines: true,
