@@ -2,6 +2,7 @@
 
 namespace App\Console;
 
+use Illuminate\Support\Facades\Log;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
@@ -24,8 +25,18 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        // $schedule->command('inspire')
-        //          ->hourly();
+        // $schedule->call(function () {
+        //     $balans = Balans::select('mesto','summa')->where('user_id', 1)->get()->toArray();
+            
+        //     for ($x=0; $x<count($balans); $x++) {
+        //        $balanscontrol = new BalansControl;
+        //        $balanscontrol->user_id = 1;
+        //        $balanscontrol->mesto = $balans[$x]['mesto'];
+        //        $balanscontrol->summa = $balans[$x]['summa'];
+        //        $balanscontrol->save();
+
+        //     }
+        // })->monthlyOn(1, '00:05');
     }
 
     /**

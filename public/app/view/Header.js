@@ -23,7 +23,7 @@ Ext.define('MyApp.view.Header', {
             text: 'Вход',
            flex: 1,
            handler: function() {
-         MyApp.app.getController('Menu').redirectTo('home');
+         MyApp.app.getController('Menu').redirectTo('balans');
           
 }
     

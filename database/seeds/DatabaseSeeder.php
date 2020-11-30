@@ -15,6 +15,7 @@ class DatabaseSeeder extends Seeder
     
        $this->call(RasCategorTableSeeder::class);
         $this->call(DoxCategorTableSeeder::class);
+         $this->call(KashCategorTableSeeder::class);
        
       $this->call(DoxodTableSeeder::class);
       $this->call(RasxodTableSeeder::class);

@@ -79,7 +79,21 @@ Ext.define('MyApp.view.rasxod.BaseGridRas', {
                     format: 'Y-m-j H:i:s',
                     filter: true
                 },
-               
+               {
+                    xtype: 'widgetcolumn',
+                    width: 50,
+                    sortable: false,
+                    menuDisabled: true,
+                    widget: {
+                        xtype: 'button',
+                    iconCls: 'fa fa-trash-alt fa-lg',
+                        tooltip: 'Delete',
+                        scope: me,
+                        handler: function (btn) {
+                            me.fireEvent('widgetclick', me, btn);
+                        }
+                    }
+                }
             ]
         );
 

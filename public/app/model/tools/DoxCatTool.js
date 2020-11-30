@@ -4,11 +4,8 @@ Ext.define('MyApp.model.tools.DoxCatTool', {
      fields: [
         { name: 'id', type: 'int'},
          { name: 'categorya',type: 'string'},
-        {
-            name: 'last_update',
-            type: 'date',
-            dateFormat: 'Y-m-j H:i:s'
-        }
+         { name: 'updated_at'},
+       
     ],
 
    

@@ -47,7 +47,8 @@ controllers: [
  'Root',
  'Menu',
  'Doxod',
- 'Rasxod'
+ 'Rasxod',
+ 'Tools'
 ],
 
   

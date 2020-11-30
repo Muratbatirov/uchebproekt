@@ -3,7 +3,7 @@ Ext.define('MyApp.view.Breadcrumb', {
     xtype: 'navigation-toolbar',
     id: 'navigation-toolbar',
     reference: 'navigation-toolbar',
-    store: 'rasxod',
+    store: 'rasxodbread',
   bind: {
         selection: '{selectedView}'
     },

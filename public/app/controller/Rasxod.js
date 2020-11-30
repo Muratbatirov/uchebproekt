@@ -25,7 +25,8 @@ Ext.define('MyApp.controller.Rasxod', {
                click: me.onButtonClickSave
             },
             "basegridrasxod": {
-                         edit: me.onEdit
+                         edit: me.onEdit,
+                          widgetclick: me.onWidgetClick
                          },
               'basegridrasxod button#cancelras': {
                 click: me.onButtonClickCancel
@@ -44,7 +45,7 @@ Ext.define('MyApp.controller.Rasxod', {
             cellEditing = grid.getPlugin('cellplugin');
 
         store.insert(0, Ext.create(modelName, {
-           categorya: grid.getViewModel().get('doxodroute'), last_update: new Date()
+           categorya: grid.getViewModel().get('doxodroute'), updated_at: new Date()
         }));
       
         cellEditing.startEditByPosition({row: 0, column: 2});
@@ -62,22 +63,40 @@ Ext.define('MyApp.controller.Rasxod', {
     });
             errors = grid.validate();
 
+       
+       
         if (errors === undefined){
             store.sync({success: function(){
+              if(Ext.ComponentQuery.query('rasdobavit')[0] != undefined){
                  Ext.ComponentQuery.query('rasdobavit')[0].getStore().load();
          Ext.ComponentQuery.query('rasdobavit')[0].redraw();
-     }});
+         Ext.ComponentQuery.query('basegridrasxod')[0].getStore().reload();}else{
+          Ext.ComponentQuery.query('rascatchart')[0].getStore().load();
+           Ext.ComponentQuery.query('rascatchart')[0].redraw();
+           Ext.ComponentQuery.query('basegridrasxod')[0].getStore().reload();
+
+         }
+     },failure: function(batch, options) {
+            Ext.Msg.alert("Ошибка" , batch.getOperations()[0].error);
+        }});
         } else {
             console.log(errors);
             Ext.Msg.alert(errors);
-        }
-          
+        }   
          
             
         
     },
   onButtonClickCancel: function (button, e, options) {
         button.up('basegridrasxod').getStore().reload();
+    },
+       onWidgetClick: function(grid, button){
+
+        var store = grid.getStore(),
+            rec = button.getWidgetRecord();
+
+        store.remove(rec);
+        Ext.Msg.alert('Delete', 'Save the changes to persist the removed record.');
     },
 
  

@@ -12,6 +12,7 @@ Ext.define('MyApp.view.main.MainModel', {
         selectedView: false,
         click: false,
         login: true,
+        breadcrumb:false,
     
          }
 

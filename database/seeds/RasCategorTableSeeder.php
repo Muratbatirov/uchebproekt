@@ -13,23 +13,28 @@ class RasCategorTableSeeder extends Seeder
     {
           DB::table('rascategor')->insert([
        'user_id' => 1,
-      'text' => 'Продукты питания'
+      'text' => 'Продукты питания',
+      'updated_at' => now()
     ]);
            DB::table('rascategor')->insert([
        'user_id' => 1,
-      'text' => 'Коммунальные услуги'
+      'text' => 'Коммунальные услуги',
+      'updated_at' => now()
     ]);
             DB::table('rascategor')->insert([
        'user_id' => 1,
-      'text' =>'Транспорт'
+      'text' =>'Транспорт',
+      'updated_at' => now()
     ]);
              DB::table('rascategor')->insert([
        'user_id' => 1,
-      'text' => 'Одежда'
+      'text' => 'Одежда',
+      'updated_at' => now()
     ]);
               DB::table('rascategor')->insert([
        'user_id' => 1,
-      'text' => 'Телефон'
+      'text' => 'Телефон',
+      'updated_at' => now()
     ]);
     }
          

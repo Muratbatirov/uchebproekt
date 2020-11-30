@@ -1,8 +1,8 @@
-Ext.define('MyApp.store.menu.Rasxodstore', {
+Ext.define('MyApp.store.menu.Rasxodstorebread', {
     extend: 'Ext.data.TreeStore',
     
-    storeId: 'rasxodtree',
-    model: 'MyApp.model.menu.Treerasxod',
+    storeId: 'rasxodbread',
+    model: 'MyApp.model.menu.Treebread',
    
     
     

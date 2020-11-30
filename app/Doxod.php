@@ -8,4 +8,9 @@ class Doxod extends Model
 {
    protected $table = 'doxod';
    protected $guarded = [];
+  
+   public function kashelok()
+{
+  return $this->belongsTo('App\KashCategor', 'kash_categor_id');
+}
 }

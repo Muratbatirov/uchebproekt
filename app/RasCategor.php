@@ -9,6 +9,6 @@ class RasCategor extends Model
    protected $table = 'rascategor';
    protected $guarded = [];
    public function rasxod() {
-    return $this->hasMany('App\Rasxod');
+    return $this->hasMany('App\Rasxod','rascategor_id');
   }
 }

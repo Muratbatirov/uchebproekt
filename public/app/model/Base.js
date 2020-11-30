@@ -21,7 +21,8 @@ Ext.define('MyApp.model.Base', {
             reader: {
                 type: 'json',
                 rootProperty: 'data',
-                 totalProperty: 'total'
+                 totalProperty: 'total',
+                 messageProperty: 'msg'
             },
             writer: {
                 type: 'json',

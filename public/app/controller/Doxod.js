@@ -45,7 +45,7 @@ Ext.define('MyApp.controller.Doxod', {
             cellEditing = grid.getPlugin('cellplugin');
 
         store.insert(0, Ext.create(modelName, {
-           categorya: grid.getViewModel().get('doxodroute'), last_update: new Date()
+           categorya: grid.getViewModel().get('doxodroute'), updated_at: new Date()
         }));
       
         cellEditing.startEditByPosition({row: 0, column: 2});
@@ -65,8 +65,14 @@ Ext.define('MyApp.controller.Doxod', {
 
         if (errors === undefined){
             store.sync({success: function(){
+              if(Ext.ComponentQuery.query('doxdobavit')[0] != undefined){
                  Ext.ComponentQuery.query('doxdobavit')[0].getStore().load();
          Ext.ComponentQuery.query('doxdobavit')[0].redraw();
+         Ext.ComponentQuery.query('basegrid')[0].getStore().reload();}else{
+          Ext.ComponentQuery.query('doxcatchart')[0].getStore().load();
+           Ext.ComponentQuery.query('doxcatchart')[0].redraw();
+           Ext.ComponentQuery.query('basegrid')[0].getStore().reload();
+         }
      }});
         } else {
             console.log(errors);

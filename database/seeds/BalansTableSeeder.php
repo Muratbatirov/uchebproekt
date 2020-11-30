@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
+use Carbon\Carbon;
 class BalansTableSeeder extends Seeder
 {
     /**
@@ -13,28 +14,28 @@ class BalansTableSeeder extends Seeder
     {
          $doxod1 = DB::table('doxod')
            
-          
-            ->select( 'mesto',  DB::raw("SUM(summa) as count")) ->where('user_id', 1)  ->whereYear('updated_at', '=', 2019)
+           ->join('kash_categors', 'kash_categors.id', '=', 'doxod.kash_categor_id' )
+            ->select( 'kash_categors.text as mesto',  DB::raw("SUM(summa) as count")) ->where('doxod.user_id', 1)  ->whereYear('doxod.updated_at', '=', 2019)
           
             ->groupBy('mesto')->get()->toArray();
            
   $rasxod1 = DB::table('rasxod')
-           
+            ->join('kash_categors', 'kash_categors.id', '=', 'rasxod.kash_categor_id' )
           
-            ->select( 'mesto',  DB::raw("SUM(summa) as count")) ->where('user_id', 1)  ->whereYear('updated_at', '=', 2019)
+            ->select('kash_categors.text as mesto',  DB::raw("SUM(summa) as count")) ->where('rasxod.user_id', 1)  ->whereYear('rasxod.updated_at', '=', 2019)
           
             ->groupBy('mesto')->get()->toArray();
             $doxod2 = DB::table('doxod')
-           
+           ->join('kash_categors', 'kash_categors.id', '=', 'doxod.kash_categor_id' )
           
-            ->select( 'mesto',  DB::raw("SUM(summa) as count")) ->where('user_id', 1)  ->whereYear('updated_at', '=', 2020)
+            ->select('kash_categors.text as mesto',  DB::raw("SUM(summa) as count")) ->where('doxod.user_id', 1)  ->whereYear('doxod.updated_at', '=', 2020)
           
             ->groupBy('mesto')->get()->toArray();
            
   $rasxod2 = DB::table('rasxod')
-           
+           ->join('kash_categors', 'kash_categors.id', '=', 'rasxod.kash_categor_id' )
           
-            ->select( 'mesto',  DB::raw("SUM(summa) as count")) ->where('user_id', 1)  ->whereYear('updated_at', '=', 2020)
+            ->select( 'kash_categors.text as mesto',  DB::raw("SUM(summa) as count")) ->where('rasxod.user_id', 1)  ->whereYear('rasxod.updated_at', '=', 2020)
           
             ->groupBy('mesto')->get()->toArray();
   
@@ -43,21 +44,24 @@ class BalansTableSeeder extends Seeder
             $ostatok3= $doxod1[2]->count-$rasxod1[2]->count+$doxod2[2]->count-$rasxod2[2]->count;
        DB::table('balans')->insert([
             "user_id"=> 1,
-            'mesto' => "Наличные",
+             'kash_categor_id' => 1,
             'summa' => $ostatok1,
+            'updated_at'=> Carbon::createFromDate(2019, 1 ,1, 'Asia/Tashkent' )
             
             
         ]);
         DB::table('balans')->insert([
             "user_id"=> 1,
-            'mesto' => "Пластик-1",
+           'kash_categor_id' => 2,
             'summa' => $ostatok2,
+            'updated_at'=> Carbon::createFromDate(2019, 1 ,1, 'Asia/Tashkent' )
             
         ]);
         DB::table('balans')->insert([
             "user_id"=> 1,
-            'mesto' => "Пластик-2",
+             'kash_categor_id' => 3,
             'summa' => $ostatok3,
+            'updated_at'=> Carbon::createFromDate(2019, 1 ,1, 'Asia/Tashkent' )
             
         ]);
 

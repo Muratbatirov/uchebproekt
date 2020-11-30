@@ -7,12 +7,15 @@ use Illuminate\Support\Facades\Response;
 use Illuminate\Http\Request;
 use App\DoxCategor;
 use App\RasCategor;
+use App\KashCategor;
 use App\Balans;
+use App\BalansControl;
 use App\Doxod;
 use App\Rasxod;
 use DateTime;
 use DateTimeZone;
 use DateInterval;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Log;
 class RasxodController extends Controller
 {
@@ -21,20 +24,24 @@ class RasxodController extends Controller
     if($request->param!='false' and $request->param ){
 
      $doxod = DB::table('rasxod')
+            ->join('kash_categors', 'kash_categors.id', '=', 'rasxod.kash_categor_id' )
             ->join('rascategor', 'rascategor.id', '=', 'rasxod.rascategor_id' )
-           
-            ->select( 'rasxod.id','rascategor.text AS categorya',  'summa', 'mesto', 'rasxod.updated_at' )
+            
+            ->select( 'rasxod.id','rascategor.text AS categorya',  'summa', 'kash_categors.text as mesto','rasxod.updated_at'  )
             ->where('rasxod.user_id', 1)->where('rascategor.text', $request->param)
+            ->orderBy('rasxod.updated_at', 'DESC')
            ->skip($request->start)
                 ->take(10)
                 ->get()->toArray();
-             $doxodcount = DB::table('rasxod')
+                $doxodcount = DB::table('rasxod')
+                ->join('kash_categors', 'kash_categors.id', '=', 'rasxod.kash_categor_id' )
             ->join('rascategor', 'rascategor.id', '=', 'rasxod.rascategor_id' )
-           
-            ->select( 'rasxod.id','rascategor.text AS categorya',  'summa', 'mesto'  )
-            ->where('rasxod.user_id', 14)->where('rascategor.text', $request->param)
+            ->join('users', 'users.id', '=', 'rasxod.user_id' )
+            ->select( 'rasxod.id','rascategor.text AS categorya',  'summa','kash_categors.text as mesto'  )
+            ->where('rasxod.user_id', 1)->where('rascategor.text', $request->param)
           
-                ->get()->toArray();     
+                ->get()->toArray();
+              
              $arr = [];
              $arr['success']=true;
             $arr['data']=$doxod;
@@ -48,17 +55,19 @@ class RasxodController extends Controller
          }
          else{
           $doxod = DB::table('rasxod')
+          ->join('kash_categors', 'kash_categors.id', '=', 'rasxod.kash_categor_id' )
             ->join('rascategor', 'rascategor.id', '=', 'rasxod.rascategor_id' )
-            
-            ->select( 'rasxod.id','rascategor.text AS categorya',  'summa', 'mesto', 'rasxod.updated_at' )
+            ->join('users', 'users.id', '=', 'rasxod.user_id' )
+            ->select( 'rasxod.id','rascategor.text AS categorya',  'summa', 'kash_categors.text as mesto', 'rasxod.updated_at' )
             ->where('rasxod.user_id', 1)->orderBy('rasxod.updated_at', 'DESC')
            ->skip($request->start)
                 ->take(10)
                 ->get()->toArray();
                  $doxodcount = DB::table('rasxod')
+                 ->join('kash_categors', 'kash_categors.id', '=', 'rasxod.kash_categor_id' )
             ->join('rascategor', 'rascategor.id', '=', 'rasxod.rascategor_id' )
-           
-            ->select( 'rasxod.id','rascategor.text AS categorya',  'summa', 'mesto'  )
+            ->join('users', 'users.id', '=', 'rasxod.user_id' )
+            ->select( 'rasxod.id','rascategor.text AS categorya',  'summa', 'kash_categors.text as mesto'  )
             ->where('rasxod.user_id', 1)
           
                 ->get()->toArray();
@@ -75,8 +84,10 @@ class RasxodController extends Controller
          }
     }
     public function doxodcombo(){
-    $doxodcombo = Balans::where('user_id', 1)
-               ->select('id','mesto')
+    $doxodcombo = DB::table('balans')
+          ->join('kash_categors', 'kash_categors.id', '=', 'balans.kash_categor_id' )
+    ->where('balans.user_id', 1)
+               ->select('balans.id','kash_categors.text as mesto')
               ->get()->toArray();
    return json_encode(array(
 "success" => true,
@@ -92,25 +103,114 @@ class RasxodController extends Controller
 "data" => $doxodcombo
 ));
     }
-   
+  
     
     public function update(Request $request){
+
+         $data= json_decode(stripslashes($request->data));
+          foreach ($data as $value){
+          $kashcat= KashCategor::where('text',$value->mesto)->where('user_id', 1)
+          ->first();
+            $doxcat= RasCategor::where('user_id', 1 )->where('text', $value->categorya)
+      ->select('id')->first()->id;
+         $doxod = Rasxod::where('id', $value->id)->first();
+         $balans = Balans::where('kash_categor_id', $kashcat->id)
+          ->where('user_id', 1)->first();
+         $kashcatidold = $doxod->kash_categor_id;
+         $doxodsum = $doxod->summa;
+             $raznitsa =$value->summa - $doxod->summa;
+              if($balans->summa-$raznitsa < 0){
+             return   json_encode(array(
+    "success" => false,
+    "msg"=> "На вашем счету недостаточно средств для продолжение операции"
+   
+             ));
+          }
+            $doxod->summa = $value->summa;
+              $doxod->rascategor_id =$doxcat;
+            $doxod->kash_categor_id = $kashcat->id;
+
+             $doxod->save();
+             if($kashcat->id==$kashcatidold){
+              
+          $balans->summa = $balans->summa - $raznitsa;
+          $balans->save();
+             $balanscontrol = BalansControl::where('kash_categor_id', $kashcat->id)
+          ->where('user_id', 1)->whereMonth('updated_at', 
+            Carbon::parse( $value->updated_at)->month)
+          ->whereYear('updated_at',  Carbon::parse( $value->updated_at)->year)
+          ->first();
+
+         $balanscontrol->summa = $balans->summa;
+           $balanscontrol->timestamps = false;
+         $balanscontrol->save();
+        }
+          else{
+             $balansold = Balans::where('kash_categor_id', $kashcatidold)
+          ->where('user_id', 1)->first();
+          $balansold->summa = $balansold->summa +$doxodsum;
+          $balansold->save();
+          $balansnew = Balans::where('kash_categor_id', $kashcat->id)
+          ->where('user_id', 1)->first();
+          $balansnew->summa = $balansnew->summa -$value->summa;
+          $balansnew->save();
+           $balanscontrolold = BalansControl::where('kash_categor_id', $kashcatidold)
+          ->where('user_id', 1)->whereMonth('updated_at', 
+            Carbon::parse( $value->updated_at)->month)
+          ->whereYear('updated_at',  Carbon::parse( $value->updated_at)->year)
+          ->first();
+
+         $balanscontrolold->summa = $balansold->summa;
+           $balanscontrolold->timestamps = false;
+         $balanscontrolold->save();
+           $balanscontrol = BalansControl::where('kash_categor_id', $kashcat->id)
+          ->where('user_id', 1)->whereMonth('updated_at', 
+            Carbon::parse( $value->updated_at)->month)
+          ->whereYear('updated_at',  Carbon::parse( $value->updated_at)->year)
+          ->first();
+
+         $balanscontrol->summa = $balansnew->summa;
+           $balanscontrol->timestamps = false;
+         $balanscontrol->save();
+
+          }
         
-          $data= json_decode(stripslashes($request->data));
+ 
+      }
+      return   json_encode(array(
+   "success" => true,
+ 
+   
+             ));
+   
+           // Log::info( print_r($doxod, true));
+    }
+    public function delete(Request $request){
+         $data= json_decode(stripslashes($request->data));
           foreach ($data as $value){
          $doxod = Rasxod::where('id', $value->id)->first();
 
-            $doxod->summa = $value->summa;
+            $doxod->delete();
+         $balans = Balans::where('mesto', $value->mesto)
+          ->where('user_id', 1)->first();
+          $balans->summa= $balans->summa-$value->summa;
+          $balans->save();
+           $balanscontrol = BalansControl::where('mesto', $value->mesto)
+          ->where('user_id', 1)->whereMonth('updated_at', 
+            Carbon::parse( $value->updated_at)->month)
+          ->whereYear('updated_at',  Carbon::parse( $value->updated_at)->year)
+          ->first();
 
-             $doxod->save();
+          $balanscontrol->summa =$balanscontrol->summa-$value->summa;
+            $balanscontrol->timestamps = false;
+         $balanscontrol->save();
+             
  
       }
        return   json_encode(array(
     "success" => true
    
              ));
- 
-      
    
            // Log::info( print_r($doxod, true));
     }
@@ -119,9 +219,22 @@ class RasxodController extends Controller
         $data= json_decode(stripslashes($request->data));
 
         foreach ($data as $value){
+           $kashcat= KashCategor::where('text',$value->mesto)->where('user_id', 1)
+          ->first();
          $doxod = new Rasxod;
-     $doxod->user_id = 1;
+            $balans = Balans::where('kash_categor_id', $kashcat->id)
+          ->where('user_id', 1)->first();
+     
+      if($balans->summa-$value->summa < 0){
+             return   json_encode(array(
+    "success" => false,
+    "msg"=> "На вашем счету недостаточно средств для продолжение операции"
+   
+             ));
+          }
+    $doxod->user_id = 1;
      $doxod->summa = $value->summa;
+
      $d = new DateTime($value->updated_at, new DateTimeZone('Asia/Tashkent'));
        $d ->add(new DateInterval("PT5H"));
       $doxod->updated_at = $d;
@@ -129,10 +242,23 @@ class RasxodController extends Controller
       ->select('id')->first();
 
        $doxod->rascategor_id = $doxcatid->id;
-     $doxod->mesto = $value->mesto;
+     $doxod->kash_categor_id = $kashcat->id;
     
-    $doxod->save();}
+    $doxod->save();
+  
+          $balans->summa= $balans->summa-$value->summa;
+          $balans->save();
+           $balanscontrol = BalansControl::where('kash_categor_id', $kashcat->id)
+          ->where('user_id', 1)->whereMonth('updated_at', 
+            now()->month)
+          ->whereYear('updated_at',  now()->year)
+          ->first();
+          
+          $balanscontrol->summa = $balans->summa;
+           $balanscontrol->timestamps = false;
+         $balanscontrol->save();
 
+  }
 
      return   json_encode(array(
     "success" => true
@@ -143,6 +269,8 @@ class RasxodController extends Controller
    
            
     }
+    
+    
     
     public function chart(Request $request){
 

@@ -1,18 +1,10 @@
-Ext.define('MyApp.store.menu.Rasxodstore', {
-    extend: 'Ext.data.TreeStore',
-    
-    storeId: 'rasxodtree',
-    model: 'MyApp.model.menu.Treerasxod',
-   
-    
-    
+Ext.define('MyApp.model.menu.Treebread', {
+    extend: 'Ext.data.TreeModel',
 
-  root: {
-        text: 'Kabinet',
-        expanded: true
-    },
    
- proxy: {
+
+    
+      proxy: {
         type: 'ajax',
        api: {
             create: 'createPersons',
@@ -26,6 +18,7 @@ Ext.define('MyApp.store.menu.Rasxodstore', {
         }
        
     },
+   
+
     
-    
-}); 
+});

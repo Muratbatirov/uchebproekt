@@ -13,24 +13,29 @@ class DoxCategorTableSeeder extends Seeder
     {
           DB::table('doxcategor')->insert([
        'user_id' => 1,
-      'text' => "Зарплата"
+      'text' => "Зарплата",
+      'updated_at' => now()
     ]);
 
        DB::table('doxcategor')->insert([
        'user_id' => 1,
-      'text' => 'Доход от бизнеса'
+      'text' => 'Доход от бизнеса',
+      'updated_at' => now()
     ]);
          DB::table('doxcategor')->insert([
        'user_id' => 1,
-      'text' => 'Дивиденты'
+      'text' => 'Дивиденты',
+      'updated_at' => now()
     ]);
           DB::table('doxcategor')->insert([
        'user_id' => 1,
-      'text' => 'Пенсия'
+      'text' => 'Пенсия',
+      'updated_at' => now()
     ]);
           DB::table('doxcategor')->insert([
        'user_id' => 1,
-      'text' => 'Cтипендия'
+      'text' => 'Cтипендия',
+      'updated_at' => now()
     ]);
 
 

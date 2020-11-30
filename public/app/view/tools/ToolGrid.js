@@ -41,7 +41,7 @@ Ext.define('MyApp.view.tools.ToolGrid', {
                     {
                         xtype: 'button',
                         itemId: 'tooladd',
-                        text: 'Add',
+                        text: 'Добавить',
                         
                     },
                     {
@@ -50,13 +50,13 @@ Ext.define('MyApp.view.tools.ToolGrid', {
                     {
                         xtype: 'button',
                         itemId: 'toolsave',
-                        text: 'Save Changes',
+                        text: 'Сохранить',
                         
                     },
                     {
                         xtype: 'button',
                         itemId: 'toolcancel',
-                        text: 'Cancel Changes',
+                        text: 'Сбросить',
                         
                     }
                     
@@ -65,7 +65,10 @@ Ext.define('MyApp.view.tools.ToolGrid', {
             }
         ],
 
-        columns:[ {xtype: 'rownumberer'},
+       
+      initComponent: function() {
+        var me = this;
+    me.columns=[ {xtype: 'rownumberer'},
             {
                 text: 'Категоря',
                 flex: 1,
@@ -84,26 +87,26 @@ Ext.define('MyApp.view.tools.ToolGrid', {
                     xtype: 'datecolumn',
                     text: 'Last Update',
                     width: 150,
-                    dataIndex: 'last_update',
+                    dataIndex: 'updated_at',
                     format: 'Y-m-j H:i:s',
                     filter: true
                 },
-                {
+               {
                     xtype: 'widgetcolumn',
                     width: 50,
                     sortable: false,
                     menuDisabled: true,
                     widget: {
                         xtype: 'button',
-                       
+                    iconCls: 'fa fa-trash-alt fa-lg',
                         tooltip: 'Delete',
-                      
+                        scope: me,
+                        handler: function (btn) {
+                            me.fireEvent('widgetclick', me, btn);
+                        }
                     }
                 }
-            ],
-      initComponent: function() {
-        var me = this;
-
+            ];
        me.getColumnIndexes=function() {
             var me = this,
                 columnIndexes = [];

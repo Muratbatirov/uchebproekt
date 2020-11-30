@@ -18,11 +18,13 @@ class CreateRasxodTable extends Migration
             $table->integer('user_id')->unsigned();
            
             $table->integer('rascategor_id')->unsigned();
-            $table->char('mesto', 20); 
+             $table->integer('kash_categor_id')->unsigned();
+           
           $table->integer('summa');
             $table->timestamps();
             $table->foreign('user_id')->references('id')->on('users');
             $table->foreign('rascategor_id')->references('id')->on('rascategor');
+            $table->foreign('kash_categor_id')->references('id')->on('kash_categors');
         });
     }
 

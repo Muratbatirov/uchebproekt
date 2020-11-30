@@ -105,26 +105,7 @@ Ext.define('MyApp.view.charts.ChartModel', {
                     rootProperty: 'data'
                 }
             },
-            listeners:{
-            load: function(stor, records, successful, operation, eOpts){
-            if(records[0].data.karman1 !=undefined ){
-                this.karman1 =records[0].data.karman1;
-            }
-             if(records[0].data.karman2 !=undefined ){
-                this.karman2 =records[0].data.karman2;
-            }
-             if(records[0].data.karman3 !=undefined ){
-                this.karman3 =records[0].data.karman3;
-            }
-             if(records[0].data.karman4 !=undefined ){
-                this.karman4 =records[0].data.karman4;
-            }
-             if(records[0].data.karman5 !=undefined ){
-                this.karman5 =records[0].data.karman5;
-            }
-
-  
-}}
+     
         }
     }
 });

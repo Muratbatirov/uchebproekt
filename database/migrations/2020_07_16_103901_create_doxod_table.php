@@ -18,11 +18,13 @@ class CreateDoxodTable extends Migration
             $table->integer('user_id')->unsigned();
           
             $table->integer('doxcategor_id')->unsigned();
-            $table->char('mesto', 20); 
+             $table->integer('kash_categor_id')->unsigned();
+          
               $table->integer('summa');     
             $table->timestamps();
             $table->foreign('user_id')->references('id')->on('users');
             $table->foreign('doxcategor_id')->references('id')->on('doxcategor');
+            $table->foreign('kash_categor_id')->references('id')->on('kash_categors');
         });
     }
 

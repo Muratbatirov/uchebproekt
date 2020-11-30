@@ -4,11 +4,7 @@ Ext.define('MyApp.model.tools.KashTool', {
      fields: [
         { name: 'id', type: 'int'},
          { name: 'mesto',type: 'string'},
-        {
-            name: 'last_update',
-            type: 'date',
-            dateFormat: 'Y-m-j H:i:s'
-        }
+         { name: 'updated_at'},
     ],
 
    

@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateBalansTable extends Migration
+class CreateKashCategorsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,12 @@ class CreateBalansTable extends Migration
      */
     public function up()
     {
-        Schema::create('balans', function (Blueprint $table) {
-            $table->increments('id');
+        Schema::create('kash_categors', function (Blueprint $table) {
+              $table->increments('id');
             $table->integer('user_id')->unsigned();
-           $table->integer('kash_categor_id')->unsigned();
-           $table->integer('summa');
+            $table->char('text', 50);
             $table->timestamps();
-            $table->foreign('user_id')->references('id')->on('users');
-             $table->foreign('kash_categor_id')->references('id')->on('kash_categors');
+             $table->foreign('user_id')->references('id')->on('users');
         });
     }
 
@@ -31,6 +29,6 @@ class CreateBalansTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('balans');
+        Schema::dropIfExists('kash_categors');
     }
 }

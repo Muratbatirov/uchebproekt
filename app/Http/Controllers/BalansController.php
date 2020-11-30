@@ -8,17 +8,21 @@ use Illuminate\Http\Request;
 use App\DoxCategor;
 use App\RasCategor;
 use App\Balans;
+use App\BalansControl;
 use App\Doxod;
 use DateTime;
 use DateTimeZone;
 use DateInterval;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Log;
 class BalansController extends Controller
 {
    
     public function list(){
         
-        $balans = Balans::select('mesto','summa')->where('user_id', 1)->get();
+        $balans = DB::table('balans')
+        ->join('kash_categors', 'kash_categors.id', '=', 'balans.kash_categor_id' )
+        ->select('kash_categors.text as mesto','summa')->where('balans.user_id', 1)->get();
               $arr = [];
              $arr['success']=true;
             $arr['data']=$balans;
@@ -26,77 +30,22 @@ class BalansController extends Controller
         
            return json_encode($arr, JSON_UNESCAPED_UNICODE);
     }
-    public function bal(){
-        
-        $daxod = DB::table('doxod')
-           
-          
-            ->select( 'mesto',  DB::raw("SUM(summa) as count")) ->where('user_id', 1)  ->whereYear('updated_at', '=', 2019)
-          
-            ->groupBy('mesto')->get()->toArray();
-             dd($daxod);
-            // return json_encode($daxod, JSON_UNESCAPED_UNICODE);
-      
-         
-         
-    }
-    public function test(Request $request){
-
- $doxodold = DB::table('doxod')
-           
-          
-            ->select( 'mesto',  DB::raw("SUM(summa) as count")) ->where('user_id', 1)  ->whereYear('updated_at', '=', 2019)
-          
-            ->groupBy('mesto')->get()->toArray();
-           
-  $rasxodold = DB::table('rasxod')
-           
-          
-            ->select( 'mesto',  DB::raw("SUM(summa) as count")) ->where('user_id', 1)  ->whereYear('updated_at', '=', 2019)
-          
-            ->groupBy('mesto')->get()->toArray();
-  $doxod = DB::table('doxod')
-           
-          
-            ->select( 'mesto',  DB::raw("SUM(summa) as count"), DB::raw('MONTH(updated_at) as month')) ->where('user_id', 1)  ->whereYear('updated_at', '=', 2019)
-          
-            ->groupBy('month')->groupBy('mesto')->get()->toArray();
-           
-  $rasxod = DB::table('rasxod')
-           
-          
-            ->select( 'mesto',  DB::raw("SUM(summa) as count"), DB::raw('MONTH(updated_at) as month')) ->where('user_id', 1)  ->whereYear('updated_at', '=', 2019)
-          
-            ->groupBy('month')->groupBy('mesto')->get()->toArray();
-             $doxod2 = DB::table('doxod')
-           
-          
-            ->select( 'mesto',  DB::raw("SUM(summa) as count"), DB::raw('MONTH(updated_at) as month')) ->where('user_id', 1)  ->whereYear('updated_at', '=', 2020)
-          
-            ->groupBy('month')->groupBy('mesto')->get()->toArray();
-           
-  $rasxod2 = DB::table('rasxod')
-           
-          
-            ->select( 'mesto',  DB::raw("SUM(summa) as count"), DB::raw('MONTH(updated_at) as month')) ->where('user_id', 1)  ->whereYear('updated_at', '=', 2020)
-          
-            ->groupBy('month')->groupBy('mesto')->get()->toArray();
-
-$ostatka1=$doxodold[0]->count-$rasxodold[0]->count;
-
-$ostatka2=$doxodold[1]->count-$rasxodold[1]->count;
-
-$ostatka3=$doxodold[2]->count-$rasxodold[2]->count;
-dd($ostatka1);
-    }
+  
+  
     public function chart(Request $request){
-           $mesto = Balans::select('mesto')->where('user_id', 1)->get()->pluck('mesto')->toArray();
+     
+   $this->updateControlTable();
+   
+           $mesto = DB::table('balanscontrol')
+           ->join('kash_categors', 'kash_categors.id', '=', 'balanscontrol.kash_categor_id' )
+           ->select('kash_categors.text as mesto')->groupBy('mesto')->whereYear('balanscontrol.updated_at','=',$request->year)->where('balanscontrol.user_id', 1)->get()->pluck('mesto')->toArray();
               $arr=[];$resultArr=[];
 for ($x=0; $x<count($mesto); $x++) {
       $arr[$x] = DB::table('balanscontrol')
-            ->where('user_id', 1)->where('mesto',$mesto[$x])->select(  DB::raw('MONTH(updated_at) as month'),  DB::raw("SUM(summa) as summa"))
+            ->join('kash_categors', 'kash_categors.id', '=', 'balanscontrol.kash_categor_id' )
+            ->where('balanscontrol.user_id', 1)->where('kash_categors.text',$mesto[$x])->select(  DB::raw('MONTH(balanscontrol.updated_at) as month'),  DB::raw("SUM(summa) as summa"))
             
-            ->whereYear('updated_at', '=', $request->year)
+            ->whereYear('balanscontrol.updated_at', '=', $request->year)
             ->groupBy('month')->get()->toArray();
    
 }
@@ -111,6 +60,28 @@ $resultArr[$x]=$resultArr[$x]+[$mesto[$y] =>$arr[$y][$x]->summa];
 "success" => true,
 "data" => $resultArr
 ),JSON_UNESCAPED_UNICODE);
+    }
+    private function updateControlTable(){
+       $lastdate= BalansControl::orderBy('updated_at','DESC')->where('user_id', 1)->first()->toArray();
+    $month= Carbon::createFromFormat('Y-m-d H:i:s', $lastdate['updated_at'])->month;
+    if($month==now()->month){
+      return;
+    }else{
+      $balans = Balans::select('kash_categor_id','summa')->where('user_id', 1)->get()->toArray();
+      for ($y=0; $y<now()->month-$month; $y++){
+
+            
+            for ($x=0; $x<count($balans); $x++) {
+               $balanscontrol = new BalansControl;
+               $balanscontrol->user_id = 1;
+               $balanscontrol->kash_categor_id = $balans[$x]['kash_categor_id'];
+               $balanscontrol->summa = $balans[$x]['summa'];
+                $balanscontrol->updated_at=Carbon::createFromDate(now()->year, $month+$y+1 , 1, 'Asia/Tashkent');
+               $balanscontrol->save();
+
+            }
+      }
+    }
     }
    
 

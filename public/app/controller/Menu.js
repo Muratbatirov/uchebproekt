@@ -2,7 +2,8 @@ Ext.define('MyApp.controller.Menu', {
     extend: 'Ext.app.Controller',
 stores: [
         'menu.Breadstoretwo',
-        'menu.Rasxodstore'
+        'menu.Rasxodstore',
+        'menu.Rasxodstorebread'
     ],
     refs: [
         {
@@ -30,7 +31,8 @@ stores: [
 
       if(record.get('text')==="Доход" || record.get('text')==="Расход" || 
         record.get('text')==="Доходы по категориям" || record.get('text')==="Расходы по категориям" ){
-         return;
+        // console.log(Ext.ComponentQuery.query('mainoblojka')[0].getViewModel().get('selectedView')); 
+    return;
     }else if(record.get('text')==="Добавить доход"){
          this.redirectTo('doxod/dobavit');
     } else if(record.get('text')==="Баланс"){
@@ -69,27 +71,39 @@ stores: [
             }), 1000);
     },
     onBreadcrumbNavSelectionChange: function(breadcrumb, record) {
-        if(record.get('text')==="Доход" || record.get('text')==="Расход" || 
-        record.get('text')==="Доходы по категориям" || record.get('text')==="Расходы по категориям"){
-         return;
+  if (record) {
+      
+        var mainPanel = this.getMainPanel();
+
+    mainPanel.getViewModel().set('click', true);
+
+      if(record.get('text')==="Доход" || record.get('text')==="Расход" || 
+        record.get('text')==="Доходы по категориям" || record.get('text')==="Расходы по категориям" ){
+        // console.log(Ext.ComponentQuery.query('mainoblojka')[0].getViewModel().get('selectedView')); 
+    return;
     }else if(record.get('text')==="Добавить доход"){
          this.redirectTo('doxod/dobavit');
-    }else if(record.get('text')==="Настройки"){
-         this.redirectTo('tools');
-
     } else if(record.get('text')==="Баланс"){
 
          this.redirectTo('balans');
          
     }
-    
+    else if(record.get('text')==="Добавить расход"){
+         this.redirectTo('rasxod/dobavit');
+    }else if(record.get('text')==="Настройки"){
+         this.redirectTo('tools');
+
+    }
+   
     else{
-        if(record.parentNode.get('text')==="Доходы по категориям"){
+      if(record.parentNode.get('text')==="Доходы по категориям"){
            this.redirectTo('doxod/categorii/'+record.get('text'));
-      } else if(record.parentNode.get('text')==="Расходы по категориям"){
+      }else if(record.parentNode.get('text')==="Расходы по категориям"){
            this.redirectTo('rasxod/categorii/'+record.get('text'));
       }
+        
     }
+        }
     },
     
 
@@ -111,7 +125,7 @@ stores: [
             //     render: this.onRen
             // },
             'navigation-toolbar': {
-                change: 'onBreadcrumbNavSelectionChange'
+                change : 'onBreadcrumbNavSelectionChange'
             },
             
            

@@ -34,7 +34,7 @@ Ext.define('MyApp.view.menyu.Panel', {
             render: 'getStatus' ,
           
         },
- store: 'rasxod',
+ store: 'rasxodtree',
    
     header:{
         height:48
