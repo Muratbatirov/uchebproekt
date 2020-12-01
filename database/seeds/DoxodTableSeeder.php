@@ -50,7 +50,7 @@ class DoxodTableSeeder extends Seeder
       'updated_at'=>Carbon::createFromDate(2019, $i , 1, 'Asia/Tashkent')
     ]);
        }
-       for ($i = 1; $i <= 11; $i++){
+       for ($i = 1; $i <= 12; $i++){
           DB::table('doxod')->insert([
        'user_id' => 1,
       'doxcategor_id' => 1,

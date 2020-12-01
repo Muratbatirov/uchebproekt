@@ -179,10 +179,12 @@ class DoxodController extends Controller
     public function delete(Request $request){
          $data= json_decode(stripslashes($request->data));
           foreach ($data as $value){
+            $kashcat= KashCategor::where('text',$value->mesto)->where('user_id', 1)
+          ->first();
          $doxod = Doxod::where('id', $value->id)->first();
 
             $doxod->delete();
-         $balans = Balans::where('mesto', $value->mesto)
+         $balans = Balans::where('kash_categor_id', $kashcat->id)
           ->where('user_id', 1)->first();
           $balans->summa= $balans->summa-$value->summa;
           $balans->save();

@@ -50,7 +50,7 @@ class RasxodTableSeeder extends Seeder
       'updated_at'=>Carbon::createFromDate(2019, $i , 1, 'Asia/Tashkent')
     ]);
        }
-       for ($i = 1; $i <= 11; $i++){
+       for ($i = 1; $i <= 12; $i++){
           DB::table('rasxod')->insert([
        'user_id' => 1,
       'rascategor_id' => 1,

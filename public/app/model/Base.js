@@ -31,6 +31,10 @@ Ext.define('MyApp.model.Base', {
                 rootProperty: 'data',
                 allowSingle: false
             },
+            headers:{
+                    'Accept' : 'application/json',
+                'Authorization':'Bearer '+ localStorage.getItem("token")
+                         }
             
             
         }

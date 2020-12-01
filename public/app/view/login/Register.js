@@ -65,9 +65,7 @@ Ext.define('MyApp.view.login.Register', {
                   
 
                    
-                    listeners: {
-                        keypress: 'onTextFieldKeyPress'
-                    }
+                   
                 },
                  {
                     inputType: 'password',
@@ -78,9 +76,7 @@ Ext.define('MyApp.view.login.Register', {
                     value: '',
                     vtype: 'customPass',
                     //msgTarget: 'side',
-                    listeners: {
-                        keypress: 'onTextFieldKeyPress'
-                    }
+                   
                 }
             ],
             dockedItems: [

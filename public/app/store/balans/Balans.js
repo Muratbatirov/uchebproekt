@@ -15,6 +15,10 @@ Ext.define('MyApp.store.balans.Balans', {
                 reader: {
                     type: 'json',
                     rootProperty: 'data'
-                }
+                },
+                 headers:{
+                    'Accept' : 'application/json',
+                'Authorization':'Bearer '+ localStorage.getItem("token")
+                         }
             }
 });

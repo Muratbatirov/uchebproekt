@@ -15,7 +15,11 @@ Ext.define('MyApp.model.menu.Treerasxod', {
         reader: {
             type: 'json',
             rootProperty: 'children'
-        }
+        },
+        headers:{
+                    'Accept' : 'application/json',
+                'Authorization':'Bearer '+ localStorage.getItem("token")
+                         }
        
     },
    

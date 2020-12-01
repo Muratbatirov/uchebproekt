@@ -13,27 +13,7 @@ Ext.define('MyApp.view.login.LoginController', {
         }
     },
 
-    onTextFieldKeyPress: function(field, e, options){
-
-        var charCode = e.getCharCode(),
-            me = this;
-
-        if((e.shiftKey && charCode >= 97 && charCode <= 122) ||
-            (!e.shiftKey && charCode >= 65 && charCode <= 90)){
-
-            if(me.capslockTooltip === undefined){
-                me.capslockTooltip = Ext.widget('capslocktooltip');
-            }
-
-            me.capslockTooltip.show();
-
-        } else {
-
-            if(me.capslockTooltip !== undefined){
-                me.capslockTooltip.hide();
-            }
-        }
-    },
+  
 
     onButtonClickCancel: function(button, e, options){
         this.lookupReference('form').reset();
@@ -72,10 +52,11 @@ Ext.define('MyApp.view.login.LoginController', {
     },
 
     onLoginSuccess: function(form, action) {
+       localStorage.setItem("token", action.result.token);
         var view = this.getView();
         view.unmask();
         view.close();
-     MyApp.app.getController('Menu').redirectTo('home');
+     MyApp.app.getController('Menu').redirectTo('balans');
 
         
     }

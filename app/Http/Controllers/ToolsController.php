@@ -12,6 +12,7 @@ use App\BalansControl;
 use App\Doxod;
 use App\Rasxod;
 use DateTime;
+use App\KashCategor;
 use DateTimeZone;
 use DateInterval;
 use Carbon\Carbon;
@@ -59,13 +60,18 @@ class ToolsController extends Controller
            return json_encode($arr, JSON_UNESCAPED_UNICODE);
     }
     public function kashtool(Request $request){
-    $categlist = Balans::where('user_id', 1)
-               ->select('id','mesto', 'updated_at')
+    $categlist = DB::table('balans')
+          ->join('kash_categors', 'kash_categors.id', '=', 'balans.kash_categor_id' )
+    ->where('balans.user_id', 1)
+               ->select('balans.id','kash_categors.text as mesto', 'balans.updated_at')
                ->skip($request->start)
                 ->take(5)
               ->get()->toArray();
-    $count = Balans::where('user_id', 1)
-               ->select('id','mesto', 'updated_at')
+    $count = DB::table('balans')
+          ->join('kash_categors', 'kash_categors.id', '=', 'balans.kash_categor_id' )
+    ->where('balans.user_id', 1)
+               ->select('balans.id','kash_categors.text as mesto', 'balans.updated_at')
+              
               ->get()->toArray();
               $arr = [];
              $arr['success']=true;
@@ -191,9 +197,14 @@ class ToolsController extends Controller
         $data= json_decode(stripslashes($request->data));
       
         foreach ($data as $value){
+
+           $kashcat= new KashCategor;
+            $kashcat->user_id =1;
+            $kashcat->text =$value->mesto;
+            $kashcat->save();
          $categorya = new Balans;
      $categorya->user_id = 1;
-     $categorya->mesto = $value->mesto;
+     $categorya->kash_categor_id = $kashcat->id;
       $categorya->summa = 0;
     $categorya->save();
    
@@ -201,7 +212,7 @@ class ToolsController extends Controller
      for ($i = 1; $i <= now()->month; $i++){
     $balanscontrol = new BalansControl;
     $balanscontrol->user_id = 1;
-    $balanscontrol->mesto = $value->mesto;
+    $balanscontrol->kash_categor_id = $kashcat->id;
     $balanscontrol->summa = 0;
     $balanscontrol->updated_at=Carbon::createFromDate(now()->year, $i ,1, 'Asia/Tashkent' );
     $balanscontrol->save();
@@ -221,21 +232,26 @@ class ToolsController extends Controller
        public function kashdelete(Request $request){
          $data= json_decode(stripslashes($request->data));
           foreach ($data as $value){
-         $categorya = Balans::where('mesto', $value->mesto)->first();
+             $kashcat= KashCategor::where('id',$value->id)->where('user_id', 1)
+          ->first();
+         $categorya = Balans::where('kash_categor_id', $kashcat->id)->first();
 
             $categorya->delete();
-       $balanscontrol = BalansControl::where('mesto', $value->mesto)->get();
+       $balanscontrol = BalansControl::where('kash_categor_id', $kashcat->id)->get();
         foreach ($balanscontrol as $val){
           $val->delete();
              }
-             $doxod = Doxod::where('mesto', $value->mesto)->get();
+             $doxod = Doxod::where('kash_categor_id', $kashcat->id)->get();
             foreach ($doxod as $val){
           $val->delete();
              }
-         $rasxod = Rasxod::where('mesto', $value->mesto)->get();
+         $rasxod = Rasxod::where('kash_categor_id', $kashcat->id)->get();
           foreach ($rasxod as $val){
           $val->delete();
-             }}
+
+             }
+        $kashcat->delete();
+           }
        return   json_encode(array(
     "success" => true
    
@@ -246,11 +262,11 @@ class ToolsController extends Controller
     public function kashupdate(Request $request){
          $data= json_decode(stripslashes($request->data));
           foreach ($data as $value){
-         $categorya = Balans::where('id', $value->id)->first();
-
-            $categorya->mesto = $value->mesto;
-
-             $categorya->save();
+           $kashcat= KashCategor::where('id',$value->id)->where('user_id', 1)
+          ->first();
+          $kashcat->text= $value->mesto;
+          $kashcat->save();
+        
  
       }
        return   json_encode(array(

@@ -24,7 +24,11 @@ Ext.define('MyApp.store.menu.Rasxodstorebread', {
             type: 'json',
             rootProperty: 'children'
         }
-       
+       ,
+       headers:{
+                    'Accept' : 'application/json',
+                'Authorization':'Bearer '+ localStorage.getItem("token")
+                         }
     },
     
     

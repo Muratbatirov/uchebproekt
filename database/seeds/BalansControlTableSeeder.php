@@ -78,7 +78,7 @@ class BalansControlTableSeeder extends Seeder
     ]);
             
        }
-      for ($i = 1, $m = 1; $i <= 31; $i+=3, $m++){
+      for ($i = 1, $m = 1; $i <= 34; $i+=3, $m++){
        
 $ostatka1=$doxodold[0]->count-$rasxodold[0]->count;
 $ostatka2=$doxodold[1]->count-$rasxodold[1]->count;

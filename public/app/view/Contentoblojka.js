@@ -20,7 +20,7 @@ items: [
             width: 150,
               margin: '250 0 0 250',
              handler: function() {
-         MyApp.app.getController('Menu').redirectTo('home');
+         MyApp.app.getController('Menu').redirectTo('balans');
           
 }
                

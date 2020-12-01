@@ -20,7 +20,11 @@ Ext.define('MyApp.store.menu.Breadstoretwo', {
         reader: {
             type: 'json',
             rootProperty: 'children'
-        }
+        },
+        headers:{
+                    'Accept' : 'application/json',
+                'Authorization':'Bearer '+ localStorage.getItem("token")
+                         }
        
     },
     

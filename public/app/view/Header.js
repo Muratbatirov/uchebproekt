@@ -8,16 +8,8 @@ Ext.define('MyApp.view.Header', {
                 html:"<h3>Dommoney.com</h3> ",
                 flex: 2, }, 
     { xtype: 'tbfill' ,
-                flex: 3, },
-                {
-          xtype: 'button',
-            text: 'Регистрация',
-           flex: 1,
-            handler: function() {
-        Ext.widget('register-dialog');
-    }
-    
-   },
+                flex: 4, },
+               
     {
           xtype: 'button',
             text: 'Вход',

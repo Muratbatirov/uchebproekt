@@ -69,17 +69,20 @@ Ext.define('MyApp.controller.Root', {
     },
     onRoot: function(){
     var panel =   Ext.ComponentQuery.query('mainoblojka');
-       
-       var contentpanel =  Ext.create('MyApp.view.Contentoblojkaus');
-       var header =  Ext.create('MyApp.view.Header');
-          Ext.suspendLayouts();
-         panel[0].down('headeruser').destroy();
+        panel[0].down('headeruser').destroy();
+          
          panel[0].removeAll(true);
+       var contentpanel =  Ext.create('MyApp.view.Contentoblojkaus');
+       var footer =  Ext.create('MyApp.view.Sitefooter');
+       var header =  Ext.create('MyApp.view.Header');
+          
+        
          
           panel[0].add(header);
+          panel[0].add(footer);
         
          panel[0].add(contentpanel);
-  Ext.resumeLayouts(true);
+ 
 
     
    },
@@ -88,14 +91,7 @@ Ext.define('MyApp.controller.Root', {
     this.userstate();
     
    },
-      onActionBalans: function(){
-       if(!this.getMainPanel().getViewModel().get('click')){
-  this.userstate();
-      }
-
-
-
-    },
+      
     
     onActionDobavit: function(){
       if(!this.getMainPanel().getViewModel().get('click')){
@@ -271,6 +267,12 @@ Ext.define('MyApp.controller.Root', {
       
     },
       onActionBalans: function(){
+         var token = localStorage.getItem("token");
+         console.log(token);
+         if(token ===null){
+           Ext.Msg.alert("Ошибка" , "NoLogin");
+           return;
+         }
        if(!this.getMainPanel().getViewModel().get('click')){
   this.userstate();
       }

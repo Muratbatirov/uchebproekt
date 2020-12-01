@@ -129,7 +129,7 @@ class RasxodController extends Controller
             $doxod->summa = $value->summa;
               $doxod->rascategor_id =$doxcat;
             $doxod->kash_categor_id = $kashcat->id;
-
+             $doxod->timestamps = false;
              $doxod->save();
              if($kashcat->id==$kashcatidold){
               
@@ -188,10 +188,12 @@ class RasxodController extends Controller
     public function delete(Request $request){
          $data= json_decode(stripslashes($request->data));
           foreach ($data as $value){
+              $kashcat= KashCategor::where('text',$value->mesto)->where('user_id', 1)
+          ->first();
          $doxod = Rasxod::where('id', $value->id)->first();
 
             $doxod->delete();
-         $balans = Balans::where('mesto', $value->mesto)
+         $balans = Balans::where('kash_categor_id', $kashcat->id)
           ->where('user_id', 1)->first();
           $balans->summa= $balans->summa-$value->summa;
           $balans->save();
@@ -235,9 +237,7 @@ class RasxodController extends Controller
     $doxod->user_id = 1;
      $doxod->summa = $value->summa;
 
-     $d = new DateTime($value->updated_at, new DateTimeZone('Asia/Tashkent'));
-       $d ->add(new DateInterval("PT5H"));
-      $doxod->updated_at = $d;
+   
       $doxcatid = RasCategor::where('user_id', 1 )->where('text', $value->categorya)
       ->select('id')->first();
 

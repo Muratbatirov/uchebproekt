@@ -18,7 +18,7 @@ use Illuminate\Support\Facades\Log;
 class BalansController extends Controller
 {
    
-    public function list(){
+    public function list(Request $request){
         
         $balans = DB::table('balans')
         ->join('kash_categors', 'kash_categors.id', '=', 'balans.kash_categor_id' )
@@ -26,6 +26,7 @@ class BalansController extends Controller
               $arr = [];
              $arr['success']=true;
             $arr['data']=$balans;
+            $arr['user']=$request->user();
       
         
            return json_encode($arr, JSON_UNESCAPED_UNICODE);

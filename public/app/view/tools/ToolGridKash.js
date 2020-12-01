@@ -73,7 +73,10 @@ Ext.define('MyApp.view.tools.ToolGridKash', {
                 text: 'Категоря',
                 flex: 1,
                 dataIndex: 'mesto',
-                 
+                  editor: {
+                    allowBlank: false,
+                    maxLength: 45
+                },
                 filter: {
                     type: 'string'
                 }
