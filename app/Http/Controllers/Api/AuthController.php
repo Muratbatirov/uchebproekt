@@ -43,7 +43,7 @@ public function login (Request $request) {
 
         if (Hash::check($request->password, $user->password)) {
             $token = $user->createToken('Laravel Password Grant Client')->accessToken;
-            $response = ['token' => $token];
+          $response = ['success' => true, 'token' => $token];
             return response($response, 200);
         } else {
             $response = "Password missmatch";

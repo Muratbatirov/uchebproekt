@@ -2,7 +2,7 @@ Ext.define('MyApp.view.doxod.BaseGrid', {
     extend: 'Ext.grid.Panel', 
     xtype: 'basegrid',
 
-  
+  height: 500,
     columnLines: true,
     viewConfig: {
         stripeRows: true

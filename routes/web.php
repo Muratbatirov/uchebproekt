@@ -14,6 +14,7 @@
 Route::get('/', function () {
     return view('welcome');
 });
+Route::group(['middleware' => ['auth:api']], function () {
 Route::any('/menudoxod', 'DataController@menudoxod');
 Route::any('/menurasxod', 'DataController@menurasxod');
 
@@ -56,4 +57,4 @@ Route::get('/chartbalans/list', 'BalansController@chart');
 Route::get('/redirect', 'Auth\LoginController@redirectToProvider');
 Route::get('/callback', 'Auth\LoginController@handleProviderCallback');
 
-
+});

@@ -7,7 +7,7 @@ Ext.define('MyApp.view.menyu.Panel', {
    
     region: 'west',
     
-  title: 'Examples',
+  title: 'Kabinet',
     rootVisible: false,
     lines: false,
     useArrows: true,

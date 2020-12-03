@@ -9,7 +9,7 @@ Ext.define('MyApp.view.tools.ToolGridRas', {
         stripeRows: true
     },
 
-   
+   height: 300,
 
        selModel:{
             selType: 'cellmodel'

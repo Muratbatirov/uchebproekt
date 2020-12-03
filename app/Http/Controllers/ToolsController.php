@@ -24,12 +24,12 @@ class ToolsController extends Controller
 
     
      public function doxcattool(Request $request){
-    $categlist = DoxCategor::where('user_id', 1)
+    $categlist = DoxCategor::where('user_id', $request->user()->id)
                ->select('id','text AS categorya', 'updated_at')
                ->skip($request->start)
                 ->take(5)
               ->get()->toArray();
-     $count = DoxCategor::where('user_id', 1)
+     $count = DoxCategor::where('user_id', $request->user()->id)
                ->select('id','text AS categorya', 'updated_at')
                
               ->get()->toArray();
@@ -37,17 +37,17 @@ class ToolsController extends Controller
              $arr['success']=true;
             $arr['data']=$categlist;
             $arr['total']= count($count);
-
+             
    
            return json_encode($arr, JSON_UNESCAPED_UNICODE);
     }
      public function rascattool(Request $request){
-      $categlist = RasCategor::where('user_id', 1)
+      $categlist = RasCategor::where('user_id', $request->user()->id)
                ->select('id','text AS categorya', 'updated_at')
                ->skip($request->start)
                 ->take(5)
               ->get()->toArray();
-     $count = RasCategor::where('user_id', 1)
+     $count = RasCategor::where('user_id', $request->user()->id)
                ->select('id','text AS categorya', 'updated_at')
                
               ->get()->toArray();
@@ -62,14 +62,14 @@ class ToolsController extends Controller
     public function kashtool(Request $request){
     $categlist = DB::table('balans')
           ->join('kash_categors', 'kash_categors.id', '=', 'balans.kash_categor_id' )
-    ->where('balans.user_id', 1)
+    ->where('balans.user_id', $request->user()->id)
                ->select('balans.id','kash_categors.text as mesto', 'balans.updated_at')
                ->skip($request->start)
                 ->take(5)
               ->get()->toArray();
     $count = DB::table('balans')
           ->join('kash_categors', 'kash_categors.id', '=', 'balans.kash_categor_id' )
-    ->where('balans.user_id', 1)
+    ->where('balans.user_id', $request->user()->id)
                ->select('balans.id','kash_categors.text as mesto', 'balans.updated_at')
               
               ->get()->toArray();
@@ -88,7 +88,7 @@ class ToolsController extends Controller
 
         foreach ($data as $value){
          $categorya = new DoxCategor;
-     $categorya->user_id = 1;
+     $categorya->user_id = $request->user()->id;
      $categorya->text = $value->categorya;
     $categorya->save();}
 
@@ -142,7 +142,7 @@ class ToolsController extends Controller
 
         foreach ($data as $value){
          $categorya = new RasCategor;
-     $categorya->user_id = 1;
+     $categorya->user_id = $request->user()->id;
      $categorya->text = $value->categorya;
     $categorya->save();}
 
@@ -199,11 +199,11 @@ class ToolsController extends Controller
         foreach ($data as $value){
 
            $kashcat= new KashCategor;
-            $kashcat->user_id =1;
+            $kashcat->user_id = $request->user()->id;
             $kashcat->text =$value->mesto;
             $kashcat->save();
          $categorya = new Balans;
-     $categorya->user_id = 1;
+     $categorya->user_id = $request->user()->id;
      $categorya->kash_categor_id = $kashcat->id;
       $categorya->summa = 0;
     $categorya->save();
@@ -211,7 +211,7 @@ class ToolsController extends Controller
 
      for ($i = 1; $i <= now()->month; $i++){
     $balanscontrol = new BalansControl;
-    $balanscontrol->user_id = 1;
+    $balanscontrol->user_id = $request->user()->id;
     $balanscontrol->kash_categor_id = $kashcat->id;
     $balanscontrol->summa = 0;
     $balanscontrol->updated_at=Carbon::createFromDate(now()->year, $i ,1, 'Asia/Tashkent' );
@@ -232,7 +232,7 @@ class ToolsController extends Controller
        public function kashdelete(Request $request){
          $data= json_decode(stripslashes($request->data));
           foreach ($data as $value){
-             $kashcat= KashCategor::where('id',$value->id)->where('user_id', 1)
+             $kashcat= KashCategor::where('id',$value->id)->where('user_id', $request->user()->id)
           ->first();
          $categorya = Balans::where('kash_categor_id', $kashcat->id)->first();
 
@@ -262,7 +262,7 @@ class ToolsController extends Controller
     public function kashupdate(Request $request){
          $data= json_decode(stripslashes($request->data));
           foreach ($data as $value){
-           $kashcat= KashCategor::where('id',$value->id)->where('user_id', 1)
+           $kashcat= KashCategor::where('id',$value->id)->where('user_id', $request->user()->id)
           ->first();
           $kashcat->text= $value->mesto;
           $kashcat->save();

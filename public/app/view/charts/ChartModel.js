@@ -20,7 +20,11 @@ Ext.define('MyApp.view.charts.ChartModel', {
                 reader: {
                     type: 'json',
                     rootProperty: 'data'
-                }
+                },
+                headers:{
+                    'Accept' : 'application/json',
+                'Authorization':'Bearer '+ localStorage.getItem("token")
+                         }
             }
         },
          rasxodchartstore: {
@@ -39,7 +43,11 @@ Ext.define('MyApp.view.charts.ChartModel', {
                 reader: {
                     type: 'json',
                     rootProperty: 'data'
-                }
+                },
+                headers:{
+                    'Accept' : 'application/json',
+                'Authorization':'Bearer '+ localStorage.getItem("token")
+                         }
             }
         },
          doxodcatstore: {
@@ -55,7 +63,11 @@ Ext.define('MyApp.view.charts.ChartModel', {
                 reader: {
                     type: 'json',
                     rootProperty: 'data'
-                }
+                },
+                headers:{
+                    'Accept' : 'application/json',
+                'Authorization':'Bearer '+ localStorage.getItem("token")
+                         }
             }
         },
            rasxodcatstore: {
@@ -71,7 +83,11 @@ Ext.define('MyApp.view.charts.ChartModel', {
                 reader: {
                     type: 'json',
                     rootProperty: 'data'
-                }
+                },
+                headers:{
+                    'Accept' : 'application/json',
+                'Authorization':'Bearer '+ localStorage.getItem("token")
+                         }
             }
         },
          rasxodcatstore: {
@@ -87,7 +103,11 @@ Ext.define('MyApp.view.charts.ChartModel', {
                 reader: {
                     type: 'json',
                     rootProperty: 'data'
-                }
+                },
+                headers:{
+                    'Accept' : 'application/json',
+                'Authorization':'Bearer '+ localStorage.getItem("token")
+                         }
             }
         },
           balanschart: {
@@ -103,7 +123,11 @@ Ext.define('MyApp.view.charts.ChartModel', {
                 reader: {
                     type: 'json',
                     rootProperty: 'data'
-                }
+                },
+                headers:{
+                    'Accept' : 'application/json',
+                'Authorization':'Bearer '+ localStorage.getItem("token")
+                         }
             },
      
         }

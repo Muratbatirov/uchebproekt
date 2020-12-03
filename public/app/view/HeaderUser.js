@@ -15,7 +15,25 @@ Ext.define('MyApp.view.HeaderUser', {
             text: 'Выход',
            flex: 1,
            handler: function() {
-         MyApp.app.getController('Menu').redirectTo('glavnaya');
+            Ext.Ajax.request({
+     url: '/logout',
+defaultHeaders : {
+                    'Accept' : 'application/json',
+                'Authorization':'Bearer '+ localStorage.getItem("token")
+                         },
+     success: function(response, opts) {
+       localStorage.removeItem('token');
+       MyApp.app.getController('Menu').redirectTo('glavnaya');
+        Ext.Msg.alert("Poka" , response.responseText);
+         
+     },
+
+     failure: function(response, opts) {
+         console.log('server-side failure with status code ' + response.status);
+     }
+ });
+            
+         
           
 }
     

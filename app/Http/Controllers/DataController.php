@@ -15,9 +15,9 @@ use DateInterval;
 use Illuminate\Support\Facades\Log;
 class DataController extends Controller
 {
-    public function menudoxod(){
+    public function menudoxod(Request $request){
     	
-        $doxod = DoxCategor::select('id','name')->where('user_id', 14)->get();
+        $doxod = DoxCategor::select('id','name')->where('user_id', $request->user()->id4)->get();
          
         
          
@@ -31,7 +31,7 @@ class DataController extends Controller
     }
   
 
-    public function menurasxod(){
+    public function menurasxod(Request $request){
 
         $root = [
              "success"=> true,
@@ -40,7 +40,7 @@ class DataController extends Controller
                  ];
           $arr1=[];
          
-    	  $doxod = DoxCategor::select('text')->where('user_id', 1)->get()->toArray();
+    	  $doxod = DoxCategor::select('text')->where('user_id', $request->user()->id)->get()->toArray();
              for ($x = 0; $x < count($doxod); $x++) {
               $arr1[$x]= $doxod[$x]+["leaf"=>true]+['iconCls'=> 'fa fa-file-invoice-dollar fa-lg'];
              
@@ -48,7 +48,7 @@ class DataController extends Controller
  
 
 
-        $rasxod = RasCategor::select('text')->where('user_id', 1)->get()->toArray();
+        $rasxod = RasCategor::select('text')->where('user_id', $request->user()->id)->get()->toArray();
        
         $arr2=[];
          for ($x = 0; $x < count($rasxod); $x++) {

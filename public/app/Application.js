@@ -26,17 +26,7 @@ Ext.define('MyApp.Application', {
     requires: [
  'MyApp.overrides.chart.ChartOveride'
 ],
-init:function(){
 
-
- Ext.create('MyApp.store.menu.Breadstore', {
-            storeId: 'breadd'});
-  Ext.create('MyApp.store.menu.Breadstoretwo', {
-            storeId: 'breadtwo'});
-  
-   
-   
-},
 
     platformConfig: {
         desktop: {

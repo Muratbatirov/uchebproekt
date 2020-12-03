@@ -2,7 +2,7 @@ Ext.define('MyApp.view.rasxod.BaseGridRas', {
     extend: 'Ext.grid.Panel', 
     xtype: 'basegridrasxod',
 
-  
+  height: 500,
     columnLines: true,
     viewConfig: {
         stripeRows: true

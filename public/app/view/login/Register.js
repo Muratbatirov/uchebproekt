@@ -17,9 +17,9 @@ Ext.define('MyApp.view.login.Register', {
         type: 'fit'
     },
     iconCls: 'fa fa-key fa-lg',
-    title: "login",
+    title: "Register",
     closeAction: 'hide',
-    closable: false,
+    closable: true,
     draggable: false,
     resizable: false,
 
@@ -59,7 +59,7 @@ Ext.define('MyApp.view.login.Register', {
                     inputType: 'password',
                     name: 'password',
                     fieldLabel: 'password',
-                    id: 'password',
+                   
                     maxLength: 15,
                     value: '',
                   

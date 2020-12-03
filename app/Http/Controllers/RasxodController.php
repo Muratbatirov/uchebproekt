@@ -28,7 +28,7 @@ class RasxodController extends Controller
             ->join('rascategor', 'rascategor.id', '=', 'rasxod.rascategor_id' )
             
             ->select( 'rasxod.id','rascategor.text AS categorya',  'summa', 'kash_categors.text as mesto','rasxod.updated_at'  )
-            ->where('rasxod.user_id', 1)->where('rascategor.text', $request->param)
+            ->where('rasxod.user_id', $request->user()->id)->where('rascategor.text', $request->param)
             ->orderBy('rasxod.updated_at', 'DESC')
            ->skip($request->start)
                 ->take(10)
@@ -38,7 +38,7 @@ class RasxodController extends Controller
             ->join('rascategor', 'rascategor.id', '=', 'rasxod.rascategor_id' )
             ->join('users', 'users.id', '=', 'rasxod.user_id' )
             ->select( 'rasxod.id','rascategor.text AS categorya',  'summa','kash_categors.text as mesto'  )
-            ->where('rasxod.user_id', 1)->where('rascategor.text', $request->param)
+            ->where('rasxod.user_id', $request->user()->id)->where('rascategor.text', $request->param)
           
                 ->get()->toArray();
               
@@ -59,7 +59,7 @@ class RasxodController extends Controller
             ->join('rascategor', 'rascategor.id', '=', 'rasxod.rascategor_id' )
             ->join('users', 'users.id', '=', 'rasxod.user_id' )
             ->select( 'rasxod.id','rascategor.text AS categorya',  'summa', 'kash_categors.text as mesto', 'rasxod.updated_at' )
-            ->where('rasxod.user_id', 1)->orderBy('rasxod.updated_at', 'DESC')
+            ->where('rasxod.user_id', $request->user()->id)->orderBy('rasxod.updated_at', 'DESC')
            ->skip($request->start)
                 ->take(10)
                 ->get()->toArray();
@@ -68,7 +68,7 @@ class RasxodController extends Controller
             ->join('rascategor', 'rascategor.id', '=', 'rasxod.rascategor_id' )
             ->join('users', 'users.id', '=', 'rasxod.user_id' )
             ->select( 'rasxod.id','rascategor.text AS categorya',  'summa', 'kash_categors.text as mesto'  )
-            ->where('rasxod.user_id', 1)
+            ->where('rasxod.user_id', $request->user()->id)
           
                 ->get()->toArray();
              $arr = [];
@@ -83,10 +83,10 @@ class RasxodController extends Controller
            return json_encode($arr, JSON_UNESCAPED_UNICODE);
          }
     }
-    public function doxodcombo(){
+    public function doxodcombo(Request $request){
     $doxodcombo = DB::table('balans')
           ->join('kash_categors', 'kash_categors.id', '=', 'balans.kash_categor_id' )
-    ->where('balans.user_id', 1)
+    ->where('balans.user_id', $request->user()->id)
                ->select('balans.id','kash_categors.text as mesto')
               ->get()->toArray();
    return json_encode(array(
@@ -94,8 +94,8 @@ class RasxodController extends Controller
 "data" => $doxodcombo
 ));
     }
-    public function categcombo(){
-    $doxodcombo = RasCategor::where('user_id', 1)
+    public function categcombo(Request $request){
+    $doxodcombo = RasCategor::where('user_id', $request->user()->id)
                ->select('id','text')
               ->get()->toArray();
    return json_encode(array(
@@ -109,13 +109,13 @@ class RasxodController extends Controller
 
          $data= json_decode(stripslashes($request->data));
           foreach ($data as $value){
-          $kashcat= KashCategor::where('text',$value->mesto)->where('user_id', 1)
+          $kashcat= KashCategor::where('text',$value->mesto)->where('user_id', $request->user()->id)
           ->first();
-            $doxcat= RasCategor::where('user_id', 1 )->where('text', $value->categorya)
+            $doxcat= RasCategor::where('user_id', $request->user()->id )->where('text', $value->categorya)
       ->select('id')->first()->id;
          $doxod = Rasxod::where('id', $value->id)->first();
          $balans = Balans::where('kash_categor_id', $kashcat->id)
-          ->where('user_id', 1)->first();
+          ->where('user_id', $request->user()->id)->first();
          $kashcatidold = $doxod->kash_categor_id;
          $doxodsum = $doxod->summa;
              $raznitsa =$value->summa - $doxod->summa;
@@ -136,7 +136,7 @@ class RasxodController extends Controller
           $balans->summa = $balans->summa - $raznitsa;
           $balans->save();
              $balanscontrol = BalansControl::where('kash_categor_id', $kashcat->id)
-          ->where('user_id', 1)->whereMonth('updated_at', 
+          ->where('user_id', $request->user()->id)->whereMonth('updated_at', 
             Carbon::parse( $value->updated_at)->month)
           ->whereYear('updated_at',  Carbon::parse( $value->updated_at)->year)
           ->first();
@@ -147,15 +147,15 @@ class RasxodController extends Controller
         }
           else{
              $balansold = Balans::where('kash_categor_id', $kashcatidold)
-          ->where('user_id', 1)->first();
+          ->where('user_id', $request->user()->id)->first();
           $balansold->summa = $balansold->summa +$doxodsum;
           $balansold->save();
           $balansnew = Balans::where('kash_categor_id', $kashcat->id)
-          ->where('user_id', 1)->first();
+          ->where('user_id', $request->user()->id)->first();
           $balansnew->summa = $balansnew->summa -$value->summa;
           $balansnew->save();
            $balanscontrolold = BalansControl::where('kash_categor_id', $kashcatidold)
-          ->where('user_id', 1)->whereMonth('updated_at', 
+          ->where('user_id', $request->user()->id)->whereMonth('updated_at', 
             Carbon::parse( $value->updated_at)->month)
           ->whereYear('updated_at',  Carbon::parse( $value->updated_at)->year)
           ->first();
@@ -164,7 +164,7 @@ class RasxodController extends Controller
            $balanscontrolold->timestamps = false;
          $balanscontrolold->save();
            $balanscontrol = BalansControl::where('kash_categor_id', $kashcat->id)
-          ->where('user_id', 1)->whereMonth('updated_at', 
+          ->where('user_id', $request->user()->id)->whereMonth('updated_at', 
             Carbon::parse( $value->updated_at)->month)
           ->whereYear('updated_at',  Carbon::parse( $value->updated_at)->year)
           ->first();
@@ -188,17 +188,17 @@ class RasxodController extends Controller
     public function delete(Request $request){
          $data= json_decode(stripslashes($request->data));
           foreach ($data as $value){
-              $kashcat= KashCategor::where('text',$value->mesto)->where('user_id', 1)
+              $kashcat= KashCategor::where('text',$value->mesto)->where('user_id', $request->user()->id)
           ->first();
          $doxod = Rasxod::where('id', $value->id)->first();
 
             $doxod->delete();
          $balans = Balans::where('kash_categor_id', $kashcat->id)
-          ->where('user_id', 1)->first();
+          ->where('user_id', $request->user()->id)->first();
           $balans->summa= $balans->summa-$value->summa;
           $balans->save();
            $balanscontrol = BalansControl::where('mesto', $value->mesto)
-          ->where('user_id', 1)->whereMonth('updated_at', 
+          ->where('user_id', $request->user()->id)->whereMonth('updated_at', 
             Carbon::parse( $value->updated_at)->month)
           ->whereYear('updated_at',  Carbon::parse( $value->updated_at)->year)
           ->first();
@@ -221,11 +221,11 @@ class RasxodController extends Controller
         $data= json_decode(stripslashes($request->data));
 
         foreach ($data as $value){
-           $kashcat= KashCategor::where('text',$value->mesto)->where('user_id', 1)
+           $kashcat= KashCategor::where('text',$value->mesto)->where('user_id', $request->user()->id)
           ->first();
          $doxod = new Rasxod;
             $balans = Balans::where('kash_categor_id', $kashcat->id)
-          ->where('user_id', 1)->first();
+          ->where('user_id', $request->user()->id)->first();
      
       if($balans->summa-$value->summa < 0){
              return   json_encode(array(
@@ -238,7 +238,7 @@ class RasxodController extends Controller
      $doxod->summa = $value->summa;
 
    
-      $doxcatid = RasCategor::where('user_id', 1 )->where('text', $value->categorya)
+      $doxcatid = RasCategor::where('user_id', $request->user()->id )->where('text', $value->categorya)
       ->select('id')->first();
 
        $doxod->rascategor_id = $doxcatid->id;
@@ -249,7 +249,7 @@ class RasxodController extends Controller
           $balans->summa= $balans->summa-$value->summa;
           $balans->save();
            $balanscontrol = BalansControl::where('kash_categor_id', $kashcat->id)
-          ->where('user_id', 1)->whereMonth('updated_at', 
+          ->where('user_id', $request->user()->id)->whereMonth('updated_at', 
             now()->month)
           ->whereYear('updated_at',  now()->year)
           ->first();
@@ -275,7 +275,7 @@ class RasxodController extends Controller
     public function chart(Request $request){
 
      $doxodsum= DB::table('rasxod')->join('rascategor', 'rascategor.id', '=', 'rasxod.rascategor_id' )
-            ->where('rasxod.user_id', 1)->select(  'rascategor.text AS categorya',  DB::raw("SUM(summa) as summa"))
+            ->where('rasxod.user_id', $request->user()->id)->select(  'rascategor.text AS categorya',  DB::raw("SUM(summa) as summa"))
             
             ->whereYear('rasxod.updated_at', '=', $request->year)->whereMonth('rasxod.updated_at', '=', $request->meses+1)
             ->groupBy('rascategor.text')->get();
@@ -291,7 +291,7 @@ class RasxodController extends Controller
      public function chartcat(Request $request){
 
      $doxodsum= DB::table('rasxod')->join('rascategor', 'rascategor.id', '=', 'rasxod.rascategor_id' )
-            ->where('rasxod.user_id', 1)->select(  DB::raw('MONTH(rasxod.updated_at) as month'),  DB::raw("SUM(rasxod.summa) as summa"))
+            ->where('rasxod.user_id', $request->user()->id)->select(  DB::raw('MONTH(rasxod.updated_at) as month'),  DB::raw("SUM(rasxod.summa) as summa"))
             
             ->whereYear('rasxod.updated_at', '=', $request->year)->where('rascategor.text', $request->param)
             ->groupBy('month')->get();

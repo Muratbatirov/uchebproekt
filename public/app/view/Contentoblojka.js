@@ -12,24 +12,7 @@ Ext.define('MyApp.view.Contentoblojka', {
         hidden:true
       },
 
-items: [
-            {
-                
-               xtype: 'button',
-            text: 'Начать',
-            width: 150,
-              margin: '250 0 0 250',
-             handler: function() {
-         MyApp.app.getController('Menu').redirectTo('balans');
-          
-}
-               
-               
-            },
-          
 
-            
-        ]
         
    
 });

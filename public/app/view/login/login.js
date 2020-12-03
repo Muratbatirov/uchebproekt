@@ -8,17 +8,19 @@ Ext.define('MyApp.view.login.Login', {
     ],
 
     controller: 'login',
-
+    modal:true,
     autoShow: true,
-    height: 170,
+
+    height: 350,
     width: 360,
+
     layout: {
         type: 'fit'
     },
     iconCls: 'fa fa-key fa-lg',
-    title: 'login',
+    title: "login",
     closeAction: 'hide',
-    closable: false,
+    closable: true,
     draggable: false,
     resizable: false,
 
@@ -26,6 +28,7 @@ Ext.define('MyApp.view.login.Login', {
         {
             xtype: 'form',
             reference: 'form',
+            scrollable:true,
             bodyPadding: 15,
             defaults: {
                 xtype: 'textfield',
@@ -34,39 +37,40 @@ Ext.define('MyApp.view.login.Login', {
                 allowBlank: false,
                 vtype: 'alphanum',
                 minLength: 3,
-                msgTarget: 'side',
+                msgTarget: 'under',
                 enableKeyEvents: true,
                 listeners: {
-                    specialKey: 'onTextFieldSpecialKey'
+                    specialKey: 'onTextFieldSpecialKeyLog'
                 }
             },
             items: [
+               
                 {
-                    name: 'user',
-                    fieldLabel:'user',
-                    maxLength: 25,
-                    value: 'loiane'
+                     vtype: 'email',
+                     fieldLabel: 'Email',
+                    label: 'Email',
+                    name: 'email'
                 },
                 {
                     inputType: 'password',
                     name: 'password',
                     fieldLabel: 'password',
-                    id: 'password',
+                  
                     maxLength: 15,
-                    value: 'Packt123@',
-                    
-                    //msgTarget: 'side',
-                    listeners: {
-                        keypress: 'onTextFieldKeyPress'
-                    }
-                }
+                    value: '',
+                  
+
+                   
+                   
+                },
+                
             ],
             dockedItems: [
                 {
                     xtype: 'toolbar',
                     dock: 'bottom',
                     items: [
-                        
+                       
                         {
                             xtype: 'tbfill'
                         },
@@ -75,7 +79,7 @@ Ext.define('MyApp.view.login.Login', {
                             iconCls: 'fa fa-times fa-lg',
                             text: 'cencel',
                             listeners: {
-                                click: 'onButtonClickCancel'
+                                click: 'onButtonClickCancelLog'
                             }
                         },
                         {
@@ -85,7 +89,7 @@ Ext.define('MyApp.view.login.Login', {
                             iconCls: 'fa fa-sign-in fa-lg',
                             text: 'submit',
                             listeners: {
-                                click: 'onButtonClickSubmit'
+                                click: 'onButtonClickSubmitLog'
                             }
                         }
                     ]

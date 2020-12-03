@@ -9,6 +9,11 @@ Ext.define('MyApp.view.login.LoginController', {
 
     onTextFieldSpecialKey: function(field, e, options){
         if (e.getKey() === e.ENTER) {
+            this.doRegister();
+        }
+    },
+      onTextFieldSpecialKeyLog: function(field, e, options){
+        if (e.getKey() === e.ENTER) {
             this.doLogin();
         }
     },
@@ -23,11 +28,23 @@ Ext.define('MyApp.view.login.LoginController', {
         var me = this;
 
         if (me.lookupReference('form').isValid()){
+           me.doRegister();
+        }
+    },
+    onButtonClickCancelLog: function(button, e, options){
+        this.lookupReference('form').reset();
+    },
+
+    onButtonClickSubmitLog: function(button, e, options){
+        var me = this;
+
+        if (me.lookupReference('form').isValid()){
            me.doLogin();
         }
     },
 
-    doLogin: function() {
+
+    doRegister: function() {
 
         var me = this,
             form = me.lookupReference('form');
@@ -38,6 +55,44 @@ Ext.define('MyApp.view.login.LoginController', {
             clientValidation: true,
             url: 'register',
             scope: me,
+            success: 'onRegisterSuccess',
+            failure: 'onRegisterFailure'
+        });
+    },
+
+    onRegisterFailure: function(form, action) {
+
+        this.getView().unmask();
+  Ext.Msg.alert("Ошибка" , "Poprobuyte esho raz");
+        
+     
+    },
+
+    onRegisterSuccess: function(form, action) {
+       localStorage.setItem("token", action.result.token);
+        var view = this.getView();
+        view.unmask();
+        view.close();
+
+    // MyApp.app.getController('Menu').redirectTo('tools');
+     window.location.assign('#tools');
+   
+      window.location.reload();
+     
+
+        
+    },
+     doLogin: function() {
+
+        var me = this,
+            form = me.lookupReference('form');
+
+        me.getView().mask('Authenticating... Please wait...');
+
+        form.submit({
+            clientValidation: true,
+            url: 'login',
+            scope: me,
             success: 'onLoginSuccess',
             failure: 'onLoginFailure'
         });
@@ -45,8 +100,8 @@ Ext.define('MyApp.view.login.LoginController', {
 
     onLoginFailure: function(form, action) {
 
-        //this.getView().unmask();
-
+        this.getView().unmask();
+  Ext.Msg.alert("Ошибка" , "Poprobuyte esho raz");
         
      
     },
@@ -56,7 +111,11 @@ Ext.define('MyApp.view.login.LoginController', {
         var view = this.getView();
         view.unmask();
         view.close();
-     MyApp.app.getController('Menu').redirectTo('balans');
+
+    // MyApp.app.getController('Menu').redirectTo('tools');
+     window.location.assign('#balans');
+      window.location.reload();
+    
 
         
     }

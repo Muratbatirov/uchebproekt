@@ -8,14 +8,25 @@ Ext.define('MyApp.view.Header', {
                 html:"<h3>Dommoney.com</h3> ",
                 flex: 2, }, 
     { xtype: 'tbfill' ,
-                flex: 4, },
+                flex: 3, },
+                 {
+          xtype: 'button',
+            text: 'Регистрация',
+           flex: 1,
+            handler: function() {
+             if(Ext.ComponentQuery.query('register-dialog')[0]!=undefined) {
+             Ext.ComponentQuery.query('register-dialog')[0].destroy();}
+        Ext.widget('register-dialog');
+    }
+
+   },
                
     {
           xtype: 'button',
             text: 'Вход',
            flex: 1,
            handler: function() {
-         MyApp.app.getController('Menu').redirectTo('balans');
+         Ext.widget('login-dialog');
           
 }
     

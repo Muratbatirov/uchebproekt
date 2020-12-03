@@ -9,8 +9,8 @@ Ext.define('MyApp.view.tools.ToolGrid', {
         stripeRows: true
     },
 
+   height: 300,
    
-
        selModel:{
             selType: 'cellmodel'
         },

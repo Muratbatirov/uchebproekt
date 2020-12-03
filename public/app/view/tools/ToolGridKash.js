@@ -9,7 +9,7 @@ Ext.define('MyApp.view.tools.ToolGridKash', {
         stripeRows: true
     },
 
-   
+   height: 300,
 
        selModel:{
             selType: 'cellmodel'
